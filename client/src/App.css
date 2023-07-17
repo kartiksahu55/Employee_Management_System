@@ -1,0 +1,9 @@
+.App {
+  background-color: rgb(255, 255, 255);
+}
+
+.route {
+    margin-left: 220px;
+    padding-top: 30px;
+    overflow: hidden;
+}

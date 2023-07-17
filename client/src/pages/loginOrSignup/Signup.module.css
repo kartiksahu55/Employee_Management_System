@@ -1,0 +1,49 @@
+.login_or_signup__Page{
+    padding: 40px;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+}
+
+.login_or_signup__Form{
+    display: flex;
+    flex-direction: column;
+    min-width: 300px;
+    max-height: 350px;
+    padding: 20px;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(240, 240, 240);
+    box-shadow: 0 0 12px 2px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    gap: 20px;
+}
+
+.login_or_signup__Form input{
+    width: 80%;
+    font-size: 1.1rem;
+    padding: 6px 20px;
+    border-radius: 5px 25px;
+    border: none;
+    outline: none;
+}
+
+.login_or_signup__Form button{
+    background-color: rgb(34, 34, 184);
+    color: white;
+    font-size: 1.1rem;
+    width: 90%;
+    padding: 6px 0px;
+    border-radius: 5px 25px;
+    border: none;
+}
+
+.login_Redirect{
+    text-decoration: none;
+    color: blue;
+}
+
+.login_Redirect:hover{
+    text-decoration: underline;
+    color: rgb(0, 0, 0);
+}

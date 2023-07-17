@@ -1,0 +1,52 @@
+.navbar_main_cointainer {
+  width: 200px;
+  height: 100vh;
+  background-color: rgb(24, 187, 187);
+  position: fixed;
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+}
+.fa_User {
+  font-size: 3.2rem;
+  width: 100%;
+  padding-top: 25%;
+  padding-bottom: 10px;
+  color: #fff;
+}
+
+.separator_hr_line{
+  background-color: rgb(2, 2, 2);
+}
+
+.dashBord{
+  display: flex;
+  align-items: center;
+  padding-left: 25px;
+  padding-top: 25px;
+  padding-bottom: 10px;
+  font-size: 1.2em;
+  margin-top: 20px;
+  color: #e3faff;
+  gap: 10px;
+  border-top: 2px solid rgb(179, 254, 255);
+  border-bottom: 2px solid rgb(179, 254, 255);
+}
+
+.admin_Section ul li{
+  color: #e3faff;
+  margin: 25px 0 10px 25px;
+  list-style: none;
+  font-size: 18px;
+}
+
+.admin_Section ul li a{
+  color: #e3faff;
+  padding-left: 10px;
+  text-decoration: none;
+}
+
+.admin_Section ul li:hover{
+  color: #fff;
+  transform: scale(1.08);
+  font-weight: bold;
+}
