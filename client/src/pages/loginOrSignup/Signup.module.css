@@ -23,19 +23,28 @@
     width: 80%;
     font-size: 1.1rem;
     padding: 6px 20px;
-    border-radius: 5px 25px;
+    border-radius: 0px 25px;
     border: none;
     outline: none;
 }
+.login_or_signup__Form input:focus{
+    transform: scale(1.03);
+}
 
 .login_or_signup__Form button{
-    background-color: rgb(34, 34, 184);
+    background-color: rgb(28, 28, 171);
     color: white;
     font-size: 1.1rem;
     width: 90%;
     padding: 6px 0px;
-    border-radius: 5px 25px;
+    border-radius: 0px 25px;
     border: none;
+    cursor: pointer;
+}
+
+.login_or_signup__Form button:hover{
+    background-color: rgb(0, 0, 255);
+    transform: scale(1.02);
 }
 
 .login_Redirect{

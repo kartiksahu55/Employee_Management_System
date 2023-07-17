@@ -1,10 +1,12 @@
 {
   "name": "employee_ms",
+  "type": "module",
   "version": "1.0.0",
   "description": "Employee management system",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start":"nodemon ./src/index.js"
   },
   "author": "kartik",
   "license": "ISC",

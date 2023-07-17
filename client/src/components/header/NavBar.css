@@ -1,7 +1,7 @@
 .navbar_main_cointainer {
   width: 200px;
   height: 100vh;
-  background-color: rgb(24, 187, 187);
+  background-color: #38af6e;
   position: fixed;
   box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.4);
   overflow: hidden;
