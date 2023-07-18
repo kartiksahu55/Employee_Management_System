@@ -1,7 +1,7 @@
 .navbar_main_cointainer {
   width: 200px;
   height: 100vh;
-  background-color: #38af6e;
+  background-color: #20262a;
   position: fixed;
   box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.4);
   overflow: hidden;
@@ -14,11 +14,11 @@
   color: #fff;
 }
 
-.separator_hr_line{
+.separator_hr_line {
   background-color: rgb(2, 2, 2);
 }
 
-.dashBord{
+.dashBord {
   display: flex;
   align-items: center;
   padding-left: 25px;
@@ -32,21 +32,41 @@
   border-bottom: 2px solid rgb(179, 254, 255);
 }
 
-.admin_Section ul li{
-  color: #e3faff;
+.admin_Section ul li {
   margin: 25px 0 10px 25px;
   list-style: none;
   font-size: 18px;
 }
 
-.admin_Section ul li a{
+.inactive {
   color: #e3faff;
+}
+
+.admin_Section ul li a {
   padding-left: 10px;
   text-decoration: none;
 }
 
-.admin_Section ul li:hover{
-  color: #fff;
+.inactive a{
+  color: #e3faff;
+}
+
+.admin_Section ul li:hover {
+  color: #2dc483;
+  transform: scale(1.08);
+  font-weight: bold;
+}
+
+.admin_Section ul li a:hover {
+  color: #2dc483;
+  transform: scale(1.08);
+  font-weight: bold;
+}
+
+.active,
+.active a {
+  color: #2dc483;
+  padding-left: 15px;
   transform: scale(1.08);
   font-weight: bold;
 }
