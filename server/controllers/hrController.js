@@ -76,7 +76,7 @@ const hrLogin = async (req, res, next) => {
 
     //   Check and validate email and password exist or not
     console.log(password);
-    console.log((await hr.comparePassword(password)));
+    console.log(await hr.comparePassword(password));
     if (!hr || !(await hr.comparePassword(password))) {
       return next(new AppError("Email or Password does not match", 400));
     }
@@ -97,8 +97,42 @@ const hrLogin = async (req, res, next) => {
   }
 };
 
-const hrFetch = async (req, res, next) => {};
+// -------------------Fetch/Get_Data-------------------
+const hrFetch = async (req, res, next) => {
+  try {
+    // Get user(hr) Id from the authMiddleware
+    const hrId = req.hrDetail.id;
 
-const hrLogout = async (req, res, next) => {};
+    // Get the user(hr) data from the Database
+    const hr = await Hr.findOne({ _id: hrId });
+    hr.password = undefined;
+
+    // Send user(hr) data as response
+    res.status(200).json({
+      success: true,
+      message: "Data successfully fetched",
+      hr,
+    });
+  } catch (error) {
+    return next(new AppError(error.message, 400));
+  }
+};
+
+// -------------------Logout-------------------
+const hrLogout = async (req, res, next) => {
+  try {
+    res.cookie("token", null, {
+      maxAge: 0,
+      httpOnly: true,
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "Logged Out  succefully",
+    });
+  } catch (error) {
+    return next(new AppError(error.message, 400));
+  }
+};
 
 export default { hrSignup, hrLogin, hrFetch, hrLogout };
