@@ -1,8 +1,9 @@
 import { Schema, model } from "mongoose";
+import validator from "validator";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-const hrSchema = new Schema(
+const userSchema = new Schema(
   {
     firstname: {
       type: String,
@@ -25,52 +26,32 @@ const hrSchema = new Schema(
       lowercase: true,
       trim: true,
       match: [
-        /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g,
-        "Please Enter a valid Email address",
+        /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
+        "Please enter a valid email address",
       ],
     },
 
     password: {
       type: String,
       required: [true, "Password is required"],
-      minlength: [8, "Minimun email length is 8 Characters"],
+      minlength: [8, "Minimun password length is 8 Characters"],
       trim: true,
       select: true,
     },
 
-    employee: [
-      {
-        id: {
-          type: String,
-          required: true,
-          trim: true,
-        },
-        name: {
-          type: String,
-          required: true,
-          trim: true,
-        },
-        shift: {
-          type: Number,
-        },
-        gender: {
-          type: String,
-          required: true,
-        },
-        employee_avatar: {
-          public_id: { type: String },
-          secure_url: { type: String },
-        },
-        dob: {
-          type: String,
-          required: false,
-        },
-        hiredate: {
-          type: String,
-          required: false,
-        },
+    phone: {
+      type: String,
+      required: [true, "Please enter a valid phone number"],
+      validate: {
+        validator: (value) => validator.isMobilePhone(value, "en-IN"),
+        message: "Please enter a valid phone number",
       },
-    ],
+    },
+
+    gender: {
+      type: String,
+      enum: ["Male", "Female", "Other"],
+    },
 
     avatar: {
       public_id: { type: String },
@@ -79,8 +60,13 @@ const hrSchema = new Schema(
 
     role: {
       type: String,
-      enum: ["Admin", "HR"],
-      default: "HR",
+      enum: ["ADMIN", "EMPLOYEE"],
+      default: "EMPLOYEE",
+    },
+
+    // Model For Admin
+    user: {
+      type: Array,
     },
   },
 
@@ -90,7 +76,7 @@ const hrSchema = new Schema(
 );
 
 // Encrypt the password, then save in DataBase
-hrSchema.pre("save", async function (next) {
+userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {
     next();
   }
@@ -99,7 +85,7 @@ hrSchema.pre("save", async function (next) {
   next();
 });
 
-hrSchema.methods = {
+userSchema.methods = {
   // Create JWT Token
   generateJWTToken: async function () {
     return jwt.sign(
@@ -122,5 +108,5 @@ hrSchema.methods = {
   },
 };
 
-const Hr = model("Hr", hrSchema);
-export default Hr;
+const User = model("User", userSchema);
+export default User;

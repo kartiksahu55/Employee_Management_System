@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
-import hrRouter from "../routers/hrRouter.js";
+import userRouter from "../routers/userRouter.js";
 import errorMidleware from "../middleware/errorMiddleware.js";
 
 const app = express();
@@ -15,14 +15,14 @@ app.use(
   "*",
   cors({
     credentials: true,
-    origin: false,
+    origin: true,
   })
 );
 app.use(morgan("dev"));
 app.use(cookieParser());
 
 //Router
-app.use("/api/hr", hrRouter);
+app.use("/api/user", userRouter);
 
 app.all("*", (req, res) => {
   res.status(404).send("Oops! 404 Page not found");

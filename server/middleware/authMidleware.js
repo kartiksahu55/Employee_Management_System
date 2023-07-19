@@ -8,9 +8,9 @@ const isloggedIn = async (req, res, next) => {
     return next(new AppError("Unuthenticated, Please Login again", 400));
   }
 
-  const hrDetail = await jwt.verify(token, process.env.JWS_SECRET_KEY);
+  const user = await jwt.verify(token, process.env.JWS_SECRET_KEY);
 
-  req.hrDetail = hrDetail;
+  req.user = user;
 
   next();
 };
