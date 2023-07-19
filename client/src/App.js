@@ -6,7 +6,7 @@ import Signup from "./pages/login&Signup/Signup";
 import Login from "./pages/login&Signup/Login";
 import Logout from "./pages/logout/Logout";
 import NoPage from "./pages/nopage/NoPage";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 
 function App() {

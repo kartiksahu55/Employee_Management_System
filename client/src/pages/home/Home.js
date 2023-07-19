@@ -28,6 +28,7 @@ const Home = ({ isLoggedIn, setIsLoggedIn }) => {
         const userData = response.data.user;
 
         setHomePage(!success);
+        setAdminData(userData)
 
         console.log(success, message, userData);
       } catch (error) {
@@ -54,7 +55,7 @@ const Home = ({ isLoggedIn, setIsLoggedIn }) => {
   return (
     <div>
       {/* -----Admin Dashbord----- */}
-      {!homePage && <Admin />}
+      {!homePage && <Admin adminData={adminData}/>}
 
       {/* -----Home Page without login----- */}
       {homePage && (

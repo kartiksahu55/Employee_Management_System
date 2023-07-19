@@ -3,7 +3,7 @@ import styleCss from "./Admin.module.css";
 import employeeDataBase from "../../dbData";
 import {} from "@fortawesome/free-solid-svg-icons";
 
-const Admin = () => {
+const Admin = ({adminData}) => {
   const [employeeData, setEmpoyeeDate] = useState(employeeDataBase);
 
   return (
