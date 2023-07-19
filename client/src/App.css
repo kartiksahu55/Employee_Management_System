@@ -2,9 +2,15 @@
 }
 
 .route {
-    margin-left: 210px;
-    padding-top: 50px;
-    padding-left: 20px;
-    overflow: hidden;
-    background-color: #fff;
+  margin-left: 200px;
+  padding-top: 50px;
+  padding-left: 10px;
+  overflow: hidden;
+  background-color: #eaeaea;
+}
+
+.remove_margin {
+  margin-left: 0;
+  padding-top: 0;
+  padding-left: 0;
 }

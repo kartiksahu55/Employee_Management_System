@@ -11,7 +11,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 
-const NavBar = () => {
+const NavBar = ({logoutUser}) => {
   const [activeItem, setActiveItem] = useState(null);
 
   const handleItemClick = (item) => {
@@ -49,11 +49,11 @@ const NavBar = () => {
             <Link to="/login">Login</Link>
           </li>
           <li
-            className={activeItem === "Logout" ? "active" : "inactive"}
-            onClick={() => handleItemClick("Logout")}
+            className="inactive"
+            onClick={() => logoutUser()}
           >
             <FontAwesomeIcon icon={faArrowRightFromBracket} />
-            <Link to="/logout">Logout</Link>
+            <Link to="/">Logout</Link>
           </li>
         </ul>
       </div>

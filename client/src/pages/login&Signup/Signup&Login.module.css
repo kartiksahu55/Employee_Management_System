@@ -8,8 +8,8 @@
 .login_or_signup__Form{
     display: flex;
     flex-direction: column;
-    min-width: 300px;
-    max-height: 350px;
+    min-width: 350px;
+    max-height: 450px;
     padding: 20px;
     align-items: center;
     justify-content: center;
@@ -37,7 +37,7 @@
     font-size: 1.1rem;
     width: 90%;
     padding: 6px 0px;
-    border-radius: 0px 25px;
+    border-radius: 6px;
     border: none;
     cursor: pointer;
 }
@@ -55,4 +55,10 @@
 .login_Redirect:hover{
     text-decoration: underline;
     color: rgb(0, 0, 0);
+}
+
+.login_or_signup__arrowLeft{
+    font-size: 1.6em;
+    color: rgb(18, 171, 151);
+    cursor: pointer;
 }
