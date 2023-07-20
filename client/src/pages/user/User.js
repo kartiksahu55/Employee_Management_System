@@ -8,6 +8,7 @@ import Employee from "../../components/userRole/Employee";
 const User = ({setuserLoggedIn}) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isAdmin, setIsAdmin] = useState(true);
+  const [userDataDB, setUserDataDB] = useState(null);
 
   // -----Calling User-----
   useEffect(() => {
@@ -23,6 +24,7 @@ const User = ({setuserLoggedIn}) => {
 
         setIsLoggedIn(success); //true
         setuserLoggedIn(success); //true
+        setUserDataDB(userData)
 
         if (userData.role === "ADMIN") {
           setIsAdmin(success);
@@ -62,7 +64,7 @@ const User = ({setuserLoggedIn}) => {
 
   return (
     <div>
-      {isLoggedIn && <NavBar className="nav_bar" logoutUser={logoutUser} />}
+      {isLoggedIn && <NavBar className="nav_bar" logoutUser={logoutUser} userDataDB={userDataDB} />}
       <div className={isLoggedIn?"route":"remove_margin"}>
         {isAdmin ? <Admin/> : <Employee />}
       </div>

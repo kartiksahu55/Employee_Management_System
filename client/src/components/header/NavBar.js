@@ -11,8 +11,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 
-const NavBar = ({logoutUser}) => {
+const NavBar = ({ logoutUser, userDataDB }) => {
   const [activeItem, setActiveItem] = useState(null);
+
+  console.log(userDataDB);
 
   const handleItemClick = (item) => {
     setActiveItem(item);
@@ -20,7 +22,16 @@ const NavBar = ({logoutUser}) => {
 
   return (
     <div className="navbar_main_cointainer">
-      <FontAwesomeIcon icon={faUserLarge} className="fa_User" />
+      <div className="user_panel">
+        <img
+          src={
+            userDataDB.avatar.secure_url ||
+            "https://www.pngitem.com/pimgs/m/30-307416_profile-icon-png-image-free-download-searchpng-employee.png"
+          }
+          alt=""
+        />
+        <p>{userDataDB.role}</p>
+      </div>
       <div className="dashBord">
         <FontAwesomeIcon icon={faGaugeHigh} />
         <p>Dashbord</p>
@@ -34,7 +45,7 @@ const NavBar = ({logoutUser}) => {
             <FontAwesomeIcon icon={faHouseChimney} />
             <Link to="/">Home</Link>
           </li>
-          <li
+          {/* <li
             className={activeItem === "Signup" ? "active" : "inactive"}
             onClick={() => handleItemClick("Signup")}
           >
@@ -47,11 +58,8 @@ const NavBar = ({logoutUser}) => {
           >
             <FontAwesomeIcon icon={faArrowRightToBracket} />
             <Link to="/login">Login</Link>
-          </li>
-          <li
-            className="inactive"
-            onClick={() => logoutUser()}
-          >
+          </li> */}
+          <li className="inactive" onClick={() => logoutUser()}>
             <FontAwesomeIcon icon={faArrowRightFromBracket} />
             <Link to="/">Logout</Link>
           </li>

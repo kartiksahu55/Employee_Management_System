@@ -1,5 +1,6 @@
-import React, { useEffect, useReducer, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styleCss from "./AddEmployee.module.css";
+import Swal from "sweetalert2";
 
 const AddEmployee = ({ addEmployeeData }) => {
   const employeeDataStructure = {
@@ -18,6 +19,23 @@ const AddEmployee = ({ addEmployeeData }) => {
     event.preventDefault();
 
     addEmployeeData(newEmployeeData);
+
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    })
+    
+    Toast.fire({
+      icon: 'success',
+      title: 'New employee successfully Added!'
+    })
 
     setNewEmployeeData(employeeDataStructure);
   };
@@ -69,7 +87,7 @@ const AddEmployee = ({ addEmployeeData }) => {
                 // ref={textinput}
                 required
                 value={newEmployeeData.firstname}
-                placeholder="Hector"
+                placeholder="hector"
                 onChange={(e) =>
                   setNewEmployeeData({
                     ...newEmployeeData,
@@ -88,7 +106,7 @@ const AddEmployee = ({ addEmployeeData }) => {
                 id="lName"
                 name="lName"
                 required
-                placeholder="Evans"
+                placeholder="evans"
                 value={newEmployeeData.lastname}
                 onChange={(e) =>
                   setNewEmployeeData({
