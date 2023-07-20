@@ -8,6 +8,7 @@ userRouter
   .post("/signup", userController.userSignup)
   .post("/login", userController.userLogin)
   .get("/fetch", isloggedIn, userController.userFetch)
-  .get("/logout", isloggedIn, userController.userLogout);
+  .get("/logout", isloggedIn, userController.userLogout)
+  .delete("/:id", isloggedIn, userController.deleteUser);
 
 export default userRouter;

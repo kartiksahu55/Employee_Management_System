@@ -24,9 +24,9 @@ app.use(cookieParser());
 //Router
 app.use("/api/user", userRouter);
 
-app.all("*", (req, res) => {
-  res.status(404).send("Oops! 404 Page not found");
-});
+// app.all("*", (req, res) => {
+//   res.status(404).send("Oops! 404 Page not found");
+// });
 
 app.use(errorMidleware);
 

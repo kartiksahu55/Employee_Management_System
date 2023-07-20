@@ -68,6 +68,19 @@ const userSchema = new Schema(
     user: {
       type: Array,
     },
+    userid: {
+      type: String,
+      minlength: [5, "Minimun Employee Id length is 5 Characters"],
+      maxlength: [10, "Maximun Employee Id length is 10 Characters"],
+    },
+    hiredate: {
+      type: String,
+      default: new Date().toLocaleDateString("en-IN"),
+    },
+    leaveapplication: {
+      type: String,
+      maxlength: [200, "Maximun Characters allowed:200"],
+    },
   },
 
   {

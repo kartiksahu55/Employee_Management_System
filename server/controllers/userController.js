@@ -3,10 +3,10 @@ import AppError from "../utils/errorUtils.js";
 import emailValidator from "email-validator";
 
 const cookieOption = {
-  path:"/",
+  path: "/",
   maxAge: 12 * 60 * 60 * 100,
   httpOnly: true,
-    secure: true,
+  // secure: true,
 };
 
 // -------------------User__Registration/Signup-------------------
@@ -94,7 +94,6 @@ const userLogin = async (req, res, next) => {
     const user = await User.findOne({ email }).select("+password");
 
     //   Check and validate email and password exist or not
-    console.log(password);
     if (!user || !(await user.comparePassword(password))) {
       return next(new AppError("Email or Password does not match", 400));
     }
@@ -107,7 +106,7 @@ const userLogin = async (req, res, next) => {
     res.cookie("token", token, cookieOption);
     res.status(201).json({
       success: true,
-      message: "Loggedin Successfully",
+      message: "You are successfully logged in",
       user,
     });
   } catch (error) {
@@ -120,8 +119,6 @@ const userFetch = async (req, res, next) => {
   try {
     // Get user(user) Id from the authMiddleware
     const userId = req.user.id;
-
-    console.log(userId);
 
     // Get the user(user) data from the Database
     const user = await User.findOne({ _id: userId });
@@ -155,4 +152,19 @@ const userLogout = async (req, res, next) => {
   }
 };
 
-export default { userSignup, userLogin, userFetch, userLogout };
+// ----------Delete User(Employee)(Admin allowed to access)----------
+const deleteUser = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const deleteUser = await User.findOneAndDelete({ _id: id });
+    res.status(204).json({
+      success: true,
+      message: "Successfully Deleted",
+      deleteUser
+    });
+  } catch (error) {
+    return next(new AppError(error.message, 400));
+  }
+};
+
+export default { userSignup, userLogin, userFetch, userLogout, deleteUser };
