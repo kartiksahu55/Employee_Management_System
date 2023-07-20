@@ -38,7 +38,7 @@ const Login = () => {
 
   // ------------Navigate On Action------------
   if (isLoginSuccessful) {
-    return <Navigate to="/" />;
+    return <Navigate to="/user" />;
   }
   if (goBackHome) {
     return <Navigate to="/" />;

@@ -41,7 +41,7 @@ const Signup = () => {
 
   // ------------Navigate On Action------------
   if (isSignupSuccessful) {
-    return <Navigate to="/" />;
+    return <Navigate to="/user" />;
   }
   if (goBackHome) {
     return <Navigate to="/" />;

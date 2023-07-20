@@ -2,6 +2,7 @@
 }
 
 .route {
+  height: 100vh;
   margin-left: 200px;
   padding-top: 50px;
   padding-left: 10px;

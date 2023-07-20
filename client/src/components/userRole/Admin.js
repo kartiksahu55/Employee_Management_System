@@ -3,17 +3,15 @@ import styleCss from "./Admin.module.css";
 import employeeDataBase from "../../dbData";
 import {} from "@fortawesome/free-solid-svg-icons";
 
-const Admin = ({adminData}) => {
+const Admin = () => {
   const [employeeData, setEmpoyeeDate] = useState(employeeDataBase);
 
   return (
-    <div className={styleCss.main_container}>
-      {/* <div className={styleCss.sub_container}> */}
-        <button className={styleCss.button_container}>Employee Data Table</button>
-        <div>
-          Show: <input type="number" readOnly />
-        </div>
-      {/* </div> */}
+    <div className={styleCss.admin_container}>
+      <button className={styleCss.add_employee_button}>Add Employee</button>
+      <div>
+        Show: <input type="number" readOnly />
+      </div>
       <div className={styleCss.employee_table_container}>
         <table className={styleCss.employee_table}>
           {/* Table Head */}
@@ -35,7 +33,7 @@ const Admin = ({adminData}) => {
           <tbody>
             {employeeData.map((employee, i) => {
               return (
-                <tr>
+                <tr key={employee.id}>
                   <td>{i + 1}</td>
                   <td>{employee.id}</td>
                   <td>{employee.shift}</td>
@@ -46,8 +44,16 @@ const Admin = ({adminData}) => {
                   </td>
                   <td>{employee.dob}</td>
                   <td>{employee.hiredate}</td>
-                  <td>Edit</td>
-                  <td>Delete</td>
+                  <td>
+                    <button className={styleCss.edit_button}>
+                      Edit✏️
+                    </button>
+                  </td>
+                  <td>
+                    <button className={styleCss.delete_button}>
+                      Delete❌
+                    </button>
+                  </td>
                 </tr>
               );
             })}
