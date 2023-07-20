@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Home.css";
-import { faCircleRight } from "@fortawesome/free-solid-svg-icons";
+import { faCircleRight, faGauge } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Navigate } from "react-router";
 
-const Home = () => {
+const Home = ({ userLoggedIn }) => {
   const [sigUpNavigate, setSignUpNavigate] = useState(false);
   const [logInNavigate, setLogInNavigate] = useState(false);
+  const [dashboardNavigate, setDashboardNavigate] = useState(false);
 
   // -----Navigate On Action-----
   if (sigUpNavigate) {
@@ -15,6 +16,9 @@ const Home = () => {
   if (logInNavigate) {
     return <Navigate to="/login" />;
   }
+  if (dashboardNavigate) {
+    return <Navigate to="/user" />;
+  }
 
   return (
     <div className="home_page_login_non">
@@ -22,28 +26,42 @@ const Home = () => {
         <p className="home_page__left_Section_text">Employee</p>
         <p className="home_page__left_Section_text">Management</p>
         <p className="home_page__left_Section_text">System App</p>
-        <div className="home_page__left_Section_Btn_Container">
+        {!userLoggedIn && (
+          <div className="home_page__left_Section_Btn_Container">
+            <button
+              className="home_page__left_Section_button"
+              onClick={() => setSignUpNavigate(true)}
+            >
+              SignUp
+              <FontAwesomeIcon
+                className="home_page_Font_Awesome"
+                icon={faCircleRight}
+              />
+            </button>
+            <button
+              className="home_page__left_Section_button"
+              onClick={() => setLogInNavigate(true)}
+            >
+              LogIn
+              <FontAwesomeIcon
+                className="home_page_Font_Awesome"
+                icon={faCircleRight}
+              />
+            </button>
+          </div>
+        )}
+        {userLoggedIn && (
           <button
-            className="home_page__left_Section_button"
-            onClick={() => setSignUpNavigate(true)}
+            className="home_page__left_Section_button goto_Dashbaord_button"
+            onClick={() => setDashboardNavigate(true)}
           >
-            SignUp
+            Goto Dashboard
             <FontAwesomeIcon
               className="home_page_Font_Awesome"
-              icon={faCircleRight}
+              icon={faGauge}
             />
           </button>
-          <button
-            className="home_page__left_Section_button"
-            onClick={() => setLogInNavigate(true)}
-          >
-            LogIn
-            <FontAwesomeIcon
-              className="home_page_Font_Awesome"
-              icon={faCircleRight}
-            />
-          </button>
-        </div>
+        )}
       </section>
       <section className="home_page__right_Section">
         <img

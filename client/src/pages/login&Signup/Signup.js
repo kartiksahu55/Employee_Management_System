@@ -4,6 +4,7 @@ import { Link, Navigate } from "react-router-dom";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import Swal from "sweetalert2";
 
 const Signup = () => {
   const [isSignupSuccessful, setIsSignupSuccessful] = useState(false);
@@ -19,9 +20,21 @@ const Signup = () => {
 
       console.log(data.message, status);
       setIsSignupSuccessful(true);
+      return Swal.fire({
+        title:"Success",
+        text:data.message,
+        icon:"success",
+        confirmButtonText:"Ok"
+      })
     } catch (error) {
       const { response } = error;
       console.log(response.data.message);
+      return Swal.fire({
+        title:"Error",
+        text:response.data.message,
+        icon:"error",
+        confirmButtonText:"Ok!"
+      })
     }
   };
 

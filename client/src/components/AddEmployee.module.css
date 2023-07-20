@@ -1,0 +1,111 @@
+/* Hide the number input arrows */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Create Employee Main Section */
+.new_employee_main_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.new_employee_container {
+  background-color: #fff;
+  max-width: 500px;
+  padding: 30px 50px;
+  border-radius: 20px;
+  box-shadow: 0 0 16px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* -----Photo Upload Styling */
+.new_employee_photo_upload {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+}
+.new_employee_photo_upload img {
+  height: 70px;
+  width: 70px;
+  border-radius: 50%;
+}
+.new_employee_photo_upload input {
+  padding: 5px;
+  cursor: pointer;
+}
+
+/* -----Form Styling----- */
+.new_employee_add_form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  margin-top: 10px;
+  padding-top: 5px;
+  padding-bottom: 10px;
+}
+
+.new_employee_add_form_wrapper {
+  display: flex;
+  width: 100%;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.new_employee_add_form label {
+  font-size: 18px;
+  width: 100%;
+}
+
+.new_employee_add_form label span {
+  color: red;
+  font-weight: bold;
+}
+
+.new_employee_add_form input,
+select {
+  font-size: 17px;
+  width: 95%;
+  padding: 5px 5px;
+  margin-top: 2px;
+  border: 1px solid rgba(127, 127, 127, 0.4);
+  border-radius: 5px;
+  outline: none;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+.new_employee_add_form input:focus {
+  background-color: #bdfff58e;
+}
+
+/* -----Create Employee Button----- */
+.new_employee_add_form button {
+  background-color: #139ba2;
+  color: #fff;
+  font-size: 22px;
+  width: 100%;
+  margin-top: 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.new_employee_add_form button:hover {
+  background-color: #14c6d0;
+}
+.new_employee_add_form button:active {
+  transform: scale(0.95);
+}
+
+/* For Mobile Devices */
+@media (max-width: 680px) {
+    
+}

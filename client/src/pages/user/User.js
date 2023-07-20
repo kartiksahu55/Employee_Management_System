@@ -5,7 +5,7 @@ import { Navigate } from "react-router";
 import Admin from "../../components/userRole/Admin";
 import Employee from "../../components/userRole/Employee";
 
-const User = () => {
+const User = ({setuserLoggedIn}) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isAdmin, setIsAdmin] = useState(true);
 
@@ -22,6 +22,7 @@ const User = () => {
         const userData = response.data.user;
 
         setIsLoggedIn(success); //true
+        setuserLoggedIn(success); //true
 
         if (userData.role === "ADMIN") {
           setIsAdmin(success);
@@ -33,6 +34,7 @@ const User = () => {
         const status = error.response.status;
 
         setIsLoggedIn(success); //false
+        setuserLoggedIn(success); //false
 
         console.log(success, message);
       }
@@ -61,7 +63,7 @@ const User = () => {
   return (
     <div>
       {isLoggedIn && <NavBar className="nav_bar" logoutUser={logoutUser} />}
-      <div className="route">
+      <div className={isLoggedIn?"route":"remove_margin"}>
         {isAdmin ? <Admin/> : <Employee />}
       </div>
     </div>
