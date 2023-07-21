@@ -16,8 +16,6 @@ const NavBar = ({ logoutUser, userDataDB }) => {
 
   // First and Last Name = Full Name
 
-  console.log(userDataDB);
-
   const handleItemClick = (item) => {
     setActiveItem(item);
   };
@@ -41,11 +39,7 @@ const NavBar = ({ logoutUser, userDataDB }) => {
         <FontAwesomeIcon icon={faGaugeHigh} />
         <p>Dashbord</p>
       </div>
-        {/* ------------Profile Details------------ */}
-        <ul className="profile_details_section">
-          <li>{userDataDB.email}</li>
-          <li>{userDataDB.phone}</li>
-        </ul>
+
       <div className="admin_Section">
         {/* ------------Profile Page------------ */}
         <ul>

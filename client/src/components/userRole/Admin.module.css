@@ -1,75 +1,106 @@
 .admin_container {
-    width: 100%;
-    background-color: transparent;
-  }
-    
-  .add_employee_button {
-    background-color: rgb(20, 98, 114);
-    color: white;
-    display: inline-block;
-    padding: 10px;
-    font-size: 1.2em;
-    font-weight: bold;
-    margin-bottom: 20px;
-    border-radius: 0 15px 15px 0;
-    border: none;
-    cursor: pointer;
-  }
-  .add_employee_button:hover{
-    background-color: rgb(21, 148, 173);
-    transform: scale(1.02)
-  }
-  .add_employee_button:active{
-    transform: scale(0.95)
-  }
-  
-  .employee_table_container {
-    overflow-x: auto;
-  }
-  
-  .employee_table {
-    width: 99%;
-    border-collapse: collapse;
-  }
-  
-  .employee_table_head {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
-    background-color: #04aa6d;
-    color: white;
-  }
-  
-  .employee_table th,
-  .employee_table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: center;
-  }
-  
-  .employee_table tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-  
-  /* ---------Edit And Delete Button-------- */
-  .edit_button,.delete_button{
-    color: #ffffff;
-    padding: 5px 8px;
-    font-size: 1em;
-    border-radius: 6px;
-    border: none;
-    cursor: pointer;
-  }
-  .edit_button:hover,.delete_button:hover{
-    transform: scale(1.1);
-  }
-  .edit_button:active,.delete_button:active{
-    transform: scale(1);
-  }
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  margin-top: 40px;
+}
 
- .edit_button{
+.add_employee_button {
+  background-color: rgb(20, 98, 114);
+  color: white;
+  display: inline-block;
+  padding: 10px;
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-bottom: 20px;
+  border-radius: 0 15px 15px 0;
+  border: none;
+  cursor: pointer;
+}
+.add_employee_button:hover {
+  background-color: rgb(21, 148, 173);
+  transform: scale(1.02);
+}
+.add_employee_button:active {
+  transform: scale(0.95);
+}
+
+/* ------Page Refresh Button------ */
+.page_refresh_button {
+  font-size: 1.5em;
+  color: #ffffff;
   background-color: #04aa6d;
- }
- .delete_button{
+  position: absolute;
+  right: 3%;
+  top: 60px;
+  padding: 8px;
+  border-radius: 50px;
+  cursor: pointer;
+}
+
+.page_refresh_button:active{
+transform: scale(0.9);
+color: #ffffff;
+  background-color: #32dd8a;
+}
+
+.employee_table_container {
+  overflow-x: auto;
+  height: 80%;
+}
+
+.employee_table {
+  width: 99%;
+  border-collapse: collapse;
+}
+
+.employee_table_head {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04aa6d;
+  color: white;
+}
+
+.employee_table th,
+.employee_table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.employee_table thead {
+  position: sticky;
+  top: -1px;
+  z-index: 1;
+}
+
+.employee_table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* ---------Edit And Delete Button-------- */
+.edit_button,
+.delete_button {
+  color: #ffffff;
+  padding: 5px 8px;
+  font-size: 1em;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+.edit_button:hover,
+.delete_button:hover {
+  transform: scale(1.1);
+}
+.edit_button:active,
+.delete_button:active {
+  transform: scale(1);
+}
+
+.edit_button {
+  background-color: #04aa6d;
+}
+.delete_button {
   background-color: #6a0b18;
- }
+}

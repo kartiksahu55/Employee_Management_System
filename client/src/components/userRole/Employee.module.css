@@ -1,0 +1,73 @@
+.main_employee_container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-image: url("https://images.unsplash.com/photo-1553095066-5014bc7b7f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8d2FsbCUyMGJhY2tncm91bmR8ZW58MHx8MHx8fDA%3D&w=1000&q=80");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.employee_card h2 {
+  text-align: center;
+  color: #033005;
+  font-size: 26px;
+  padding-top: 2px;
+  padding-bottom: 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 4px 2px rgba(62, 62, 62, 0.3);
+}
+
+.employee_card {
+  background-color: #8fe793;
+  min-width: 400px;
+  min-height: 210px;
+  position: absolute;
+  left: 40px;
+  top: 40px;
+  border-radius: 10px;
+  padding: 20px 30px;
+  box-shadow: inset 0 0 10px 3px rgba(124, 124, 124, 0.5),
+    0 0 10px 1px rgba(0, 255, 162, 0.3);
+  overflow: hidden;
+}
+
+.employee_card p {
+  font-size: 20px;
+  margin-top: 10px;
+}
+.employee_card p :nth-child(1) {
+  display: inline-block;
+  font-weight: bold;
+  min-width: 160px;
+}
+.employee_card p :nth-child(2) {
+  color: #282828;
+}
+
+.employee_card button {
+  background-color: #004765;
+  color: white;
+  font-size: 18px;
+  padding: 5px 10px;
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  border: none;
+  box-shadow: 0 0 5px 3px rgb(245, 255, 241);
+  cursor: pointer;
+}
+.employee_card button:hover{
+    box-shadow:none;
+    transform: scale(0.99);
+}
+
+.employee_container_textarea {
+  position: absolute;
+  top: 300px;
+  left: 50px;
+}
+.employee_container_textarea textarea {
+  outline: none;
+  border-radius: 10px;
+  padding: 10px;
+}

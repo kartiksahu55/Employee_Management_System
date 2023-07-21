@@ -16,6 +16,7 @@
   color: #e3faff;
 }
 .user_panel_fullname {
+  font-size: 22px;
   text-transform: capitalize;
   border-top: 1px solid rgb(174, 174, 174);
   padding-top: 10px;
@@ -93,15 +94,3 @@
   font-weight: bold;
 }
 
-/* -----Profile Details----- */
-.profile_details_section {
-  color: #e3faff;
-  max-width: 80%;
-  padding-left: 20px;
-  padding-right: 20px;
-  list-style: none;
-}
-.profile_details_section li{
-  font-size: 16px;
-  padding-top: 10px;
-}

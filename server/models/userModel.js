@@ -1,5 +1,4 @@
 import { Schema, model } from "mongoose";
-import validator from "validator";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
@@ -41,11 +40,10 @@ const userSchema = new Schema(
 
     phone: {
       type: String,
-      required: [true, "Please enter a valid phone number"],
-      validate: {
-        validator: (value) => validator.isMobilePhone(value, "en-IN"),
-        message: "Please enter a valid phone number",
-      },
+      // validate: {
+      //   validator: (value) => validator.isMobilePhone(value, "en-IN"),
+      //   message: "Please enter a valid phone number",
+      // },
     },
 
     gender: {
@@ -96,13 +94,19 @@ const userSchema = new Schema(
   }
 );
 
-// Encrypt the password, then save in DataBase
+const capitalize = (str)=>str.charAt(0).toUpperCase()+str.slice(1).toLowerCase()
+
 userSchema.pre("save", async function (next) {
+  // Encrypt the password, then save in DataBase
   if (!this.isModified("password")) {
     next();
   }
-
   this.password = await bcrypt.hash(this.password, 10);
+
+  // Capitalize the First and Last Name
+
+  this.firstname = capitalize(this.firstname);
+  this.lastname = capitalize(this.lastname);
   next();
 });
 

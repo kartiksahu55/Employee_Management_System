@@ -1,5 +1,6 @@
 import User from "../models/userModel.js";
 import AppError from "../utils/errorUtils.js";
+import validator from "validator";
 import emailValidator from "email-validator";
 
 const cookieOption = {
@@ -15,19 +16,30 @@ const userSignup = async (req, res, next) => {
     const {
       firstname,
       lastname,
+      email,
+      password,
+      phone,
       gender,
       dob,
-      email,
-      phone,
-      password,
+      userid,
       role,
       employee,
     } = req.body;
 
     //  Check, if request contains all the required fields or not
-    if (!firstname || !lastname || !email || !phone || !password) {
+    if (!firstname || !lastname || !email || !password) {
       return next(new AppError("All filds are required", 400));
     }
+
+    // Email Id Validator
+    const isValidEmail = await emailValidator.validate(email);
+    if (!isValidEmail) {
+      return next(new AppError("Enter a valid email", 400));
+    }
+
+     // Phone Number Validator(Implement Later)
+    //  TODO
+  
 
     //  Check Duplicate entry
     const checkDuplicate = await User.findOne({ email });
@@ -39,8 +51,9 @@ const userSignup = async (req, res, next) => {
       firstname,
       lastname,
       email,
-      dob,
       phone,
+      userid,
+      dob,
       password,
       gender,
       avatar: {

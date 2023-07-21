@@ -1,43 +1,68 @@
 import React, { useEffect, useRef, useState } from "react";
 import styleCss from "./AddEmployee.module.css";
 import Swal from "sweetalert2";
+import axios from "axios";
 
 const AddEmployee = ({ addEmployeeData }) => {
   const employeeDataStructure = {
-    avatar: "",
+    avatar_url: "",
     firstname: "",
     lastname: "",
     email: "",
     phone: "",
-    employeeid: "",
+    userid: "",
     gender: "",
+    dob: "",
     hiredate: "",
+    password: "12345678",
   };
   const [newEmployeeData, setNewEmployeeData] = useState(employeeDataStructure);
 
-  const createEmployeeFormHandler = (event) => {
+  const createEmployeeFormHandler = async (event) => {
     event.preventDefault();
-
-    addEmployeeData(newEmployeeData);
 
     const Toast = Swal.mixin({
       toast: true,
-      position: 'top-end',
+      position: "top-end",
       showConfirmButton: false,
       timer: 3000,
       timerProgressBar: true,
       didOpen: (toast) => {
-        toast.addEventListener('mouseenter', Swal.stopTimer)
-        toast.addEventListener('mouseleave', Swal.resumeTimer)
-      }
-    })
-    
-    Toast.fire({
-      icon: 'success',
-      title: 'New employee successfully Added!'
-    })
+        toast.addEventListener("mouseenter", Swal.stopTimer);
+        toast.addEventListener("mouseleave", Swal.resumeTimer);
+      },
+    });
 
-    setNewEmployeeData(employeeDataStructure);
+    try {
+      console.log(newEmployeeData);
+      const response = await axios.post(
+        "http://localhost:4000/api/user/signup",
+        newEmployeeData
+      );
+
+      console.log(response);
+
+      Toast.fire({
+        icon: "success",
+        title: "New employee added successfully!",
+      });
+
+      addEmployeeData(newEmployeeData);
+      setNewEmployeeData(employeeDataStructure);
+    } catch (error) {
+      console.log(error);
+      if (!error.response) {
+        Toast.fire({
+          icon: "error",
+          title: error.message,
+        });
+      } else {
+        Toast.fire({
+          icon: "error",
+          title: error.response.data.message,
+        });
+      }
+    }
   };
 
   // Input Field get focus on component load
@@ -60,17 +85,17 @@ const AddEmployee = ({ addEmployeeData }) => {
             accept="image/"
             name="photo"
             placeholder="Upload Photos"
-            value={newEmployeeData.avatar}
+            value={newEmployeeData.avatar_url}
             onChange={(event) => {
               setNewEmployeeData({
                 ...newEmployeeData,
-                avatar: event.target.value,
+                avatar_url: event.target.value,
               });
             }}
           />
         </div>
 
-        {/* -----Form to create new employee */}
+        {/* -----Form to create new employee----- */}
         <form
           className={styleCss.new_employee_add_form}
           onSubmit={createEmployeeFormHandler}
@@ -168,11 +193,11 @@ const AddEmployee = ({ addEmployeeData }) => {
                 name="employeeId"
                 required
                 placeholder="012345"
-                value={newEmployeeData.employeeid}
+                value={newEmployeeData.userid}
                 onChange={(e) =>
                   setNewEmployeeData({
                     ...newEmployeeData,
-                    employeeid: e.target.value,
+                    userid: e.target.value,
                   })
                 }
               />
@@ -203,6 +228,25 @@ const AddEmployee = ({ addEmployeeData }) => {
           </div>
 
           <div className={styleCss.new_employee_add_form_wrapper}>
+            <label htmlFor="dob">
+              <div>
+                Date of Birth <span>*</span>
+              </div>
+              <input
+                type="date"
+                id="dob"
+                name="dob"
+                required
+                placeholder="Date of Hire"
+                value={newEmployeeData.dob}
+                onChange={(e) =>
+                  setNewEmployeeData({
+                    ...newEmployeeData,
+                    dob: e.target.value,
+                  })
+                }
+              />
+            </label>
             <label htmlFor="hireDate">
               <div>
                 Date of Hire <span>*</span>
@@ -222,9 +266,10 @@ const AddEmployee = ({ addEmployeeData }) => {
                 }
               />
             </label>
-            <button type="submit">Create Employee</button>
           </div>
+          <button type="submit">Create Employee</button>
         </form>
+        <p>Default Password: 12345678</p>
       </div>
     </div>
   );
