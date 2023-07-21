@@ -16,6 +16,7 @@ const userSignup = async (req, res, next) => {
       firstname,
       lastname,
       gender,
+      dob,
       email,
       phone,
       password,
@@ -38,6 +39,7 @@ const userSignup = async (req, res, next) => {
       firstname,
       lastname,
       email,
+      dob,
       phone,
       password,
       gender,
@@ -124,12 +126,25 @@ const userFetch = async (req, res, next) => {
     const user = await User.findOne({ _id: userId });
     user.password = undefined;
 
-    // Send user(user) data as response
-    res.status(200).json({
-      success: true,
-      message: "Data successfully fetched",
-      user,
-    });
+    // *****Check if Admin then fetch Employee Data*****
+    if (user.role === "ADMIN") {
+      const employeeData = await User.find({ role: "EMPLOYEE" }).select(
+        "-password"
+      );
+      res.status(201).json({
+        success: true,
+        message: "You are successfully logged in",
+        user,
+        employeeData,
+      });
+    } else {
+      // Send user(user) data as response
+      res.status(200).json({
+        success: true,
+        message: "Data successfully fetched",
+        user,
+      });
+    }
   } catch (error) {
     return next(new AppError(error.message, 400));
   }
@@ -156,11 +171,22 @@ const userLogout = async (req, res, next) => {
 const deleteUser = async (req, res, next) => {
   try {
     const id = req.params.id;
+
+    console.log("Before", id);
+
+    // Check if user id exist
+    const verifyId = await User.findOne({ _id: id });
+    console.log(verifyId);
+    if (!verifyId) {
+      return next(new AppError("User doesn't exist", 400));
+    }
+
     const deleteUser = await User.findOneAndDelete({ _id: id });
+    console.log("After", deleteUser);
     res.status(204).json({
       success: true,
       message: "Successfully Deleted",
-      deleteUser
+      deleteUser,
     });
   } catch (error) {
     return next(new AppError(error.message, 400));

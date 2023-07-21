@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import styleCss from "./Admin.module.css";
-import employeeDataBase from "../../dbData";
+// import employeeDataBase from "../../dbData";
 import AddEmployee from "../AddEmployee";
 import Swal from "sweetalert2";
+import axios from "axios";
 
-const Admin = () => {
-  const [employeeData, setEmpoyeeData] = useState(employeeDataBase);
+const Admin = ({ employeeDataDB }) => {
+  const [employeeData, setEmpoyeeData] = useState(employeeDataDB);
   const [addEmployee, setAddEmployee] = useState(false);
 
   const addEmployeeData = (newEmployee) => {
@@ -13,10 +14,22 @@ const Admin = () => {
     setEmpoyeeData([...employeeData, newEmployee]);
   };
 
-  console.log(employeeData);
-
   // -----Delete Employee-----
-  const deleteHandler = (key) => {
+  const deleteEmployee = async (id) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:4000/api/user/delete/${id}`,
+        { withCredentials: true }
+      );
+      console.log(response);
+      Swal.fire("Deleted!", "Employee has been deleted.", "success");
+    } catch (error) {
+      console.log(error);
+      Swal.fire("Opps!", "Something went wrong", "error");
+    }
+  };
+
+  const deleteHandler = (id) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -27,9 +40,10 @@ const Admin = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
+        deleteEmployee(id);
         // const remainData = employeeData.filter((employee)=>employee.id!==key)
-        setEmpoyeeData(employeeData.filter((employee)=>employee.id!==key))
-        Swal.fire("Deleted!", "Employee has been deleted.", "success");
+        // setEmpoyeeData(employeeData.filter((employee) => employee.id !== id));
+        // Swal.fire("Deleted!", "Employee has been deleted.", "success");
       }
     });
   };
@@ -67,14 +81,14 @@ const Admin = () => {
             <tbody>
               {employeeData.map((employee, i) => {
                 return (
-                  <tr key={employee.id}>
+                  <tr key={employee._id}>
                     <td>{i + 1}</td>
-                    <td>{employee.id}</td>
-                    <td>{employee.name}</td>
+                    <td>{employee.id || "NA"}</td>
+                    <td>{employee.firstname + " " + employee.lastname}</td>
                     <td>{employee.shift}</td>
                     <td>{employee.gender}</td>
                     <td>
-                      <img src={employee.image} alt="" height="50px" />
+                      <img src={employee.avatar.secure_url} alt="" height="50px" />
                     </td>
                     <td>{employee.dob}</td>
                     <td>{employee.hiredate}</td>

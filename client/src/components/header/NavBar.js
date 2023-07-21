@@ -14,6 +14,8 @@ import { Link } from "react-router-dom";
 const NavBar = ({ logoutUser, userDataDB }) => {
   const [activeItem, setActiveItem] = useState(null);
 
+  // First and Last Name = Full Name
+
   console.log(userDataDB);
 
   const handleItemClick = (item) => {
@@ -31,12 +33,21 @@ const NavBar = ({ logoutUser, userDataDB }) => {
           alt=""
         />
         <p>{userDataDB.role}</p>
+        <p className="user_panel_fullname">
+          {userDataDB.firstname + " " + userDataDB.lastname}
+        </p>
       </div>
       <div className="dashBord">
         <FontAwesomeIcon icon={faGaugeHigh} />
         <p>Dashbord</p>
       </div>
+        {/* ------------Profile Details------------ */}
+        <ul className="profile_details_section">
+          <li>{userDataDB.email}</li>
+          <li>{userDataDB.phone}</li>
+        </ul>
       <div className="admin_Section">
+        {/* ------------Profile Page------------ */}
         <ul>
           <li
             className={activeItem === "home" ? "active" : "inactive"}

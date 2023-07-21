@@ -9,6 +9,6 @@ userRouter
   .post("/login", userController.userLogin)
   .get("/fetch", isloggedIn, userController.userFetch)
   .get("/logout", isloggedIn, userController.userLogout)
-  .delete("/:id", isloggedIn, userController.deleteUser);
+  .delete("/delete/:id", isloggedIn, userController.deleteUser);
 
 export default userRouter;

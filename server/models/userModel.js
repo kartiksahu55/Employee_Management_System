@@ -53,6 +53,14 @@ const userSchema = new Schema(
       enum: ["Male", "Female", "Other"],
     },
 
+    dob: {
+      type: String,
+      get: (dob) => {
+        if (!dob) return "";
+        return new Date().toLocaleDateString("en-IN");
+      },
+    },
+
     avatar: {
       public_id: { type: String },
       secure_url: { type: String },

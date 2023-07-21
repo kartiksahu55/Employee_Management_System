@@ -15,6 +15,17 @@
   padding-top: 25%;
   color: #e3faff;
 }
+.user_panel_fullname {
+  text-transform: capitalize;
+  border-top: 1px solid rgb(174, 174, 174);
+  padding-top: 10px;
+  color: #2dc483;
+  font-weight: bold;
+  width: 100%;
+  padding-left: 10px;
+  padding-right: 10px;
+  text-align: center;
+}
 
 .user_panel img {
   height: 100px;
@@ -22,7 +33,7 @@
   border: 1px solid rgb(255, 255, 255);
   overflow: hidden;
   border-radius: 100%;
-  box-shadow:inset 0 0 10px 1px rgba(219, 219, 219, 0.4);
+  box-shadow: inset 0 0 10px 1px rgba(219, 219, 219, 0.4);
 }
 
 .separator_hr_line {
@@ -80,4 +91,17 @@
   padding-left: 15px;
   transform: scale(1.08);
   font-weight: bold;
+}
+
+/* -----Profile Details----- */
+.profile_details_section {
+  color: #e3faff;
+  max-width: 80%;
+  padding-left: 20px;
+  padding-right: 20px;
+  list-style: none;
+}
+.profile_details_section li{
+  font-size: 16px;
+  padding-top: 10px;
 }

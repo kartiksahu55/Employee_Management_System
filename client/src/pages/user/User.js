@@ -5,10 +5,11 @@ import { Navigate } from "react-router";
 import Admin from "../../components/userRole/Admin";
 import Employee from "../../components/userRole/Employee";
 
-const User = ({setuserLoggedIn}) => {
+const User = ({ setuserLoggedIn }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [userDataDB, setUserDataDB] = useState(null);
+  const [employeeDataDB, setEmployeeDataDB] = useState(null);
 
   // -----Calling User-----
   useEffect(() => {
@@ -24,12 +25,13 @@ const User = ({setuserLoggedIn}) => {
 
         setIsLoggedIn(success); //true
         setuserLoggedIn(success); //true
-        setUserDataDB(userData)
+        setUserDataDB(userData);
 
         if (userData.role === "ADMIN") {
           setIsAdmin(success);
+          setEmployeeDataDB(response.data.employeeData);
         }
-        console.log(success, message);
+        console.log(response);
       } catch (error) {
         const success = error.response.data.success;
         const message = error.response.data.message;
@@ -64,9 +66,15 @@ const User = ({setuserLoggedIn}) => {
 
   return (
     <div>
-      {isLoggedIn && <NavBar className="nav_bar" logoutUser={logoutUser} userDataDB={userDataDB} />}
-      <div className={isLoggedIn?"route":"remove_margin"}>
-        {isAdmin ? <Admin/> : <Employee />}
+      {isLoggedIn && (
+        <NavBar
+          className="nav_bar"
+          logoutUser={logoutUser}
+          userDataDB={userDataDB}
+        />
+      )}
+      <div className={isLoggedIn ? "route" : "remove_margin"}>
+        {isAdmin ? <Admin employeeDataDB={employeeDataDB}/> : <Employee />}
       </div>
     </div>
   );
