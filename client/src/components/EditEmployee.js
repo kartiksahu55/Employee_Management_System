@@ -4,16 +4,22 @@ import Swal from "sweetalert2";
 import axios from "axios";
 
 const EditEmployee = ({ selectEditEmployee, afterEditHandler }) => {
+  const [loader, setLoader] = useState(false);
   const [editEmployeeData, setEditEmployeeData] = useState(selectEditEmployee);
-
-  // console.log(editEmployeeData);
+  const [selectedImage, setSelectedImage] = useState(
+    selectEditEmployee.avatar.secure_url
+  );
 
   // Edit Employee
   const patchEmployee = async (Toast) => {
     try {
+      // Add Image to Object File
+      const payload = { ...editEmployeeData, avatarfile: selectedImage };
+      setLoader(true)
+      // Upload and update Employee Date
       const response = await axios.patch(
         `http://localhost:4000/api/user/update/${editEmployeeData._id}`,
-        editEmployeeData,
+        payload,
         { withCredentials: true }
       );
       Toast.fire({
@@ -23,8 +29,10 @@ const EditEmployee = ({ selectEditEmployee, afterEditHandler }) => {
       if (response.data.doc) {
         afterEditHandler(response.data.doc);
       }
+      setLoader(false)
     } catch (error) {
       console.log(error);
+      setLoader(false)
       if (!error.response) {
         Toast.fire({
           icon: "error",
@@ -74,6 +82,25 @@ const EditEmployee = ({ selectEditEmployee, afterEditHandler }) => {
     // console.log(editEmployeeData);
   };
 
+  // Image File Input And Preview
+  const previewAvatarFile = (image) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(image);
+    reader.onloadend = () => {
+      setSelectedImage(reader.result);
+    };
+  };
+
+  const imageInputHandler = (event) => {
+    const image = event.target.files[0];
+    console.log(image);
+    if (!image) {
+      setSelectedImage("");
+      return;
+    }
+    previewAvatarFile(image);
+  };
+
   return (
     <div>
       <div className={styleCss.new_employee_main_container}>
@@ -82,6 +109,7 @@ const EditEmployee = ({ selectEditEmployee, afterEditHandler }) => {
           <div className={styleCss.new_employee_photo_upload}>
             <img
               src={
+                selectedImage ||
                 selectEditEmployee.avatar.secure_url ||
                 "https://www.seekpng.com/png/detail/966-9665317_placeholder-image-person-jpg.png"
               }
@@ -89,16 +117,10 @@ const EditEmployee = ({ selectEditEmployee, afterEditHandler }) => {
             />
             <input
               type="file"
-              accept="image/"
-              name="photo"
+              id="imageInput"
+              name="image"
               placeholder="Upload Photos"
-              value={editEmployeeData.avatar_url}
-              onChange={(event) => {
-                setEditEmployeeData({
-                  ...editEmployeeData,
-                  avatar_url: event.target.value,
-                });
-              }}
+              onChange={imageInputHandler}
             />
           </div>
 
@@ -235,7 +257,8 @@ const EditEmployee = ({ selectEditEmployee, afterEditHandler }) => {
               </label>
             </div>
 
-            <button type="submit">Edit Employee</button>
+            {!loader && <button type="submit">Edit Employee</button>}
+            {loader && <span className={styleCss.loader}></span>}
           </form>
         </div>
       </div>

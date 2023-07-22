@@ -112,8 +112,8 @@ const Admin = ({ isAdmin, employeeDataDB }) => {
         )}
         {!addEmployeePage && !editEmployeePage && (
           <div className={styleCss.employee_table_container}>
-            <div>
-              Show: <input type="number" readOnly />
+            <div className={styleCss.show_total_employee}>
+              Total Employee: <input type="number" readOnly value={employeeData.length}/>
             </div>
             <table className={styleCss.employee_table}>
               {/* Table Head */}
@@ -122,7 +122,7 @@ const Admin = ({ isAdmin, employeeDataDB }) => {
                   <th>Sl. No.</th>
                   <th>ID</th>
                   <th>Name</th>
-                  <th>Shift</th>
+                  {/* <th>Shift</th> */}
                   <th>Gender</th>
                   <th>Image</th>
                   <th>DOB</th>
@@ -139,7 +139,7 @@ const Admin = ({ isAdmin, employeeDataDB }) => {
                       <td>{i + 1}</td>
                       <td>{employee.userid || "NA"}</td>
                       <td>{employee.firstname + " " + employee.lastname}</td>
-                      <td>{employee.shift}</td>
+                      {/* <td>{employee.shift}</td> */}
                       <td>{employee.gender}</td>
                       <td>
                         <img

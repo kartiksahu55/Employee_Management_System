@@ -7,7 +7,8 @@ import { Navigate } from "react-router";
 const Home = ({ userLoggedIn }) => {
   const [sigUpNavigate, setSignUpNavigate] = useState(false);
   const [logInNavigate, setLogInNavigate] = useState(false);
-  // const [dashboardNavigate, setDashboardNavigate] = useState(false);
+  const [dashboardNavigate, setDashboardNavigate] = useState(false);
+
 
   // -----Navigate On Action-----
   if (sigUpNavigate) {
@@ -16,9 +17,9 @@ const Home = ({ userLoggedIn }) => {
   if (logInNavigate) {
     return <Navigate to="/login" />;
   }
-  // if (dashboardNavigate) {
-  //   return <Navigate to="/user" />;
-  // }
+  if (dashboardNavigate) {
+    return <Navigate to="/user" />;
+  }
 
   return (
     <div className="home_page_login_non">
@@ -50,7 +51,7 @@ const Home = ({ userLoggedIn }) => {
             </button>
           </div>
         )}
-        {/* {userLoggedIn && (
+        {userLoggedIn && (
           <button
             className="home_page__left_Section_button goto_Dashbaord_button"
             onClick={() => setDashboardNavigate(true)}
@@ -61,7 +62,7 @@ const Home = ({ userLoggedIn }) => {
               icon={faGauge}
             />
           </button>
-        )} */}
+        )}
       </section>
       <section className="home_page__right_Section">
         <img

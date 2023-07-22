@@ -1,22 +1,24 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import styleCss from "./AddEmployee.module.css";
 import Swal from "sweetalert2";
 import axios from "axios";
 
+const employeeDataStructure = {
+  firstname: "",
+  lastname: "",
+  email: "",
+  phone: "",
+  userid: "",
+  gender: "",
+  dob: "",
+  hiredate: "",
+  password: "12345678",
+};
+
 const AddEmployee = ({ afterAddEmployeeHandler }) => {
-  const employeeDataStructure = {
-    avatar_url: "",
-    firstname: "",
-    lastname: "",
-    email: "",
-    phone: "",
-    userid: "",
-    gender: "",
-    dob: "",
-    hiredate: "",
-    password: "12345678",
-  };
+  const [loader, setLoader] = useState(false);
   const [newEmployeeData, setNewEmployeeData] = useState(employeeDataStructure);
+  const [selectedImage, setSelectedImage] = useState("");
 
   const createEmployeeFormHandler = async (event) => {
     event.preventDefault();
@@ -34,12 +36,16 @@ const AddEmployee = ({ afterAddEmployeeHandler }) => {
       },
     });
 
+    // Add Image to Object File
+    const payload = { ...newEmployeeData, avatarfile: selectedImage };
+
     // Add Employee
     try {
-      console.log(newEmployeeData);
+      setLoader(true)
+      console.log(payload);
       const response = await axios.post(
         "http://localhost:4000/api/user/signup",
-        newEmployeeData
+        payload
       );
 
       console.log(response.data.user);
@@ -51,8 +57,10 @@ const AddEmployee = ({ afterAddEmployeeHandler }) => {
 
       afterAddEmployeeHandler(response.data.user);
       setNewEmployeeData(employeeDataStructure);
+      setLoader(false)
     } catch (error) {
       console.log(error);
+      setLoader(false)
       if (!error.response) {
         Toast.fire({
           icon: "error",
@@ -67,11 +75,24 @@ const AddEmployee = ({ afterAddEmployeeHandler }) => {
     }
   };
 
-  // Input Field get focus on component load
-  // const textinput = useRef(null);
-  // useEffect(() => {
-  //   textinput.current.focus();
-  // });
+  // Image File Input And Preview
+  const previewAvatarFile = (image) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(image);
+    reader.onloadend = () => {
+      setSelectedImage(reader.result);
+    };
+  };
+
+  const imageInputHandler = (event) => {
+    const image = event.target.files[0];
+    console.log(image);
+    if (!image) {
+      setSelectedImage("");
+      return;
+    }
+    previewAvatarFile(image);
+  };
 
   return (
     <div className={styleCss.new_employee_main_container}>
@@ -79,21 +100,18 @@ const AddEmployee = ({ afterAddEmployeeHandler }) => {
       <div className={styleCss.new_employee_container}>
         <div className={styleCss.new_employee_photo_upload}>
           <img
-            src="https://www.seekpng.com/png/detail/966-9665317_placeholder-image-person-jpg.png"
+            src={
+              selectedImage ||
+              "https://www.seekpng.com/png/detail/966-9665317_placeholder-image-person-jpg.png"
+            }
             alt=""
           />
           <input
             type="file"
-            accept="image/"
-            name="photo"
+            id="imageInput"
+            name="image"
             placeholder="Upload Photos"
-            value={newEmployeeData.avatar_url}
-            onChange={(event) => {
-              setNewEmployeeData({
-                ...newEmployeeData,
-                avatar_url: event.target.value,
-              });
-            }}
+            onChange={imageInputHandler}
           />
         </div>
 
@@ -267,7 +285,8 @@ const AddEmployee = ({ afterAddEmployeeHandler }) => {
               />
             </label>
           </div>
-          <button type="submit">Create Employee</button>
+          {!loader && <button type="submit">Create Employee</button>}
+          {loader && <span className={styleCss.loader}></span>}
         </form>
         <p>Default Password: 12345678</p>
       </div>

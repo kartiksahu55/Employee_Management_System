@@ -44,6 +44,22 @@ color: #ffffff;
   background-color: #32dd8a;
 }
 
+.show_total_employee{
+  font-size: 18px;
+  font-weight: bold;
+  color: #046340;
+  margin-bottom: 8px;
+}
+.show_total_employee input{
+  width: 40px;
+  height: 20px;
+  font-size: 16px;
+  text-align: center;
+  border-radius: 5px;
+  border: 1px solid grey;
+  outline: none;
+}
+
 .employee_table_container {
   overflow-x: auto;
   height: 80%;

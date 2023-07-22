@@ -2,6 +2,7 @@ import User from "../models/userModel.js";
 import AppError from "../utils/errorUtils.js";
 import validator from "validator";
 import emailValidator from "email-validator";
+import cloudinary from "../config/cloudinaryConfig.js";
 
 const cookieOption = {
   path: "/",
@@ -24,6 +25,7 @@ const userSignup = async (req, res, next) => {
       userid,
       role,
       employee,
+      avatarfile,
     } = req.body;
 
     //  Check, if request contains all the required fields or not
@@ -37,14 +39,30 @@ const userSignup = async (req, res, next) => {
       return next(new AppError("Enter a valid email", 400));
     }
 
-     // Phone Number Validator(Implement Later)
+    // Phone Number Validator(Implement Later)
     //  TODO
-  
 
     //  Check Duplicate entry
     const checkDuplicate = await User.findOne({ email });
     if (checkDuplicate) {
       return next(new AppError("User already exist", 400));
+    }
+
+    // Upload image file to Cloudinary
+
+    let cloudinaryResponse = undefined;
+    if (avatarfile) {
+      cloudinaryResponse = await cloudinary.v2.uploader.upload(avatarfile, {
+        folder: "EMS_Avatar",
+        use_filename: true,
+        transformation: [
+          {
+            height: 300,
+          },
+        ],
+      });
+      console.log(cloudinaryResponse.public_id);
+      console.log(cloudinaryResponse.secure_url);
     }
 
     const user = await User.create({
@@ -57,8 +75,9 @@ const userSignup = async (req, res, next) => {
       password,
       gender,
       avatar: {
-        public_id: email,
+        public_id: (cloudinaryResponse && cloudinaryResponse.public_id) || "",
         secure_url:
+        cloudinaryResponse && cloudinaryResponse.secure_url ||
           "https://res.cloudinary.com/demo/image/upload/d_avatar.png/non_existing_id.png",
       },
       role,
@@ -69,9 +88,9 @@ const userSignup = async (req, res, next) => {
       return next(new AppError("Oops, Something went wrong", 400));
     }
 
-    //TODO: File Upload--------------
+    // //TODO: File Upload--------------
 
-    //   Save data to Database
+    // //   Save data to Database
     await user.save();
 
     user.password = undefined;
@@ -87,6 +106,7 @@ const userSignup = async (req, res, next) => {
       user,
     });
   } catch (error) {
+    console.log(error);
     return next(new AppError(error.message, 500));
   }
 };
@@ -179,7 +199,5 @@ const userLogout = async (req, res, next) => {
     return next(new AppError(error.message, 400));
   }
 };
-
-
 
 export default { userSignup, userLogin, userFetch, userLogout };
