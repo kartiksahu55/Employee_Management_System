@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import styleCss from "./Admin.module.css";
 // import employeeDataBase from "../../dbData";
 import AddEmployee from "../AddEmployee";
@@ -8,6 +8,8 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import EditEmployee from "../EditEmployee";
 
+const UserContext = createContext()
+
 const Admin = ({ isAdmin, employeeDataDB }) => {
   const [employeeData, setEmpoyeeData] = useState(employeeDataDB);
   const [addEmployeePage, setAddEmployeePage] = useState(false);
@@ -15,9 +17,8 @@ const Admin = ({ isAdmin, employeeDataDB }) => {
   const [selectEditEmployee, setSelectEditEmployee] = useState(null);
 
   console.log(employeeData);
-  // Add New Employee
-  const addEmployeeData = (newEmployee) => {
-    console.log(newEmployee);
+  // After New Employee Added, update employeeData!
+  const afterAddEmployeeHandler = (newEmployee) => {
     setEmpoyeeData([...employeeData, newEmployee]);
   };
 
@@ -28,6 +29,18 @@ const Admin = ({ isAdmin, employeeDataDB }) => {
       (employee) => employee._id === id
     );
     setSelectEditEmployee(selectEmployee[0]);
+  };
+
+  // After Employee Edited, update employeeData!
+  const afterEditHandler = (editedData) => {
+    const newData = employeeData.map((data) => {
+      if (data._id === editedData._id) {
+        console.log("it's me", data._id);
+        return editedData;
+      }
+      return data;
+    });
+    setEmpoyeeData(newData);
   };
 
   // -----Delete Employee-----
@@ -87,7 +100,7 @@ const Admin = ({ isAdmin, employeeDataDB }) => {
               setEditEmployeePage(!editEmployeePage);
             }}
           >
-            Cancel
+            Go Back
           </button>
         )}
         {!addEmployeePage && !editEmployeePage && (
@@ -168,8 +181,15 @@ const Admin = ({ isAdmin, employeeDataDB }) => {
             </table>
           </div>
         )}
-        {addEmployeePage && <AddEmployee addEmployeeData={addEmployeeData} />}
-        {editEmployeePage && <EditEmployee selectEditEmployee={selectEditEmployee} />}
+        {addEmployeePage && (
+          <AddEmployee afterAddEmployeeHandler={afterAddEmployeeHandler} />
+        )}
+        {editEmployeePage && (
+          <EditEmployee
+            selectEditEmployee={selectEditEmployee}
+            afterEditHandler={afterEditHandler}
+          />
+        )}
       </div>
     )
   );

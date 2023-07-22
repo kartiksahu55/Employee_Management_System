@@ -1,14 +1,77 @@
 import React, { useState } from "react";
 import styleCss from "./AddEmployee.module.css";
+import Swal from "sweetalert2";
+import axios from "axios";
 
-const EditEmployee = ({ selectEditEmployee }) => {
+const EditEmployee = ({ selectEditEmployee, afterEditHandler }) => {
   const [editEmployeeData, setEditEmployeeData] = useState(selectEditEmployee);
 
-  console.log(editEmployeeData);
+  // console.log(editEmployeeData);
 
-  const editEmployeeFormHandler = (event) => {
-    event.preventDefault()
-    // console.log(employeeDataStructure);
+  // Edit Employee
+  const patchEmployee = async (Toast) => {
+    try {
+      const response = await axios.patch(
+        `http://localhost:4000/api/user/update/${editEmployeeData._id}`,
+        editEmployeeData,
+        { withCredentials: true }
+      );
+      Toast.fire({
+        icon: "success",
+        title: "Updated Successfully!",
+      });
+      if (response.data.doc) {
+        afterEditHandler(response.data.doc);
+      }
+    } catch (error) {
+      console.log(error);
+      if (!error.response) {
+        Toast.fire({
+          icon: "error",
+          title: error.message,
+        });
+      } else {
+        Toast.fire({
+          icon: "error",
+          title: error.response.data.message,
+        });
+      }
+    }
+  };
+
+  const editEmployeeFormHandler = async (event) => {
+    event.preventDefault();
+
+    // Define sweetalert2
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener("mouseenter", Swal.stopTimer);
+        toast.addEventListener("mouseleave", Swal.resumeTimer);
+      },
+    });
+
+    Swal.fire({
+      title: "Confirm!",
+      text: "You won't be able to revert this!",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Edit it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        patchEmployee(Toast);
+      }
+    });
+
+    // // Edit Employee
+
+    // console.log(editEmployeeData);
   };
 
   return (

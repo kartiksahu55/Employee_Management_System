@@ -3,7 +3,7 @@ import styleCss from "./AddEmployee.module.css";
 import Swal from "sweetalert2";
 import axios from "axios";
 
-const AddEmployee = ({ addEmployeeData }) => {
+const AddEmployee = ({ afterAddEmployeeHandler }) => {
   const employeeDataStructure = {
     avatar_url: "",
     firstname: "",
@@ -21,6 +21,7 @@ const AddEmployee = ({ addEmployeeData }) => {
   const createEmployeeFormHandler = async (event) => {
     event.preventDefault();
 
+    // Define sweetalert2
     const Toast = Swal.mixin({
       toast: true,
       position: "top-end",
@@ -33,6 +34,7 @@ const AddEmployee = ({ addEmployeeData }) => {
       },
     });
 
+    // Add Employee
     try {
       console.log(newEmployeeData);
       const response = await axios.post(
@@ -40,14 +42,14 @@ const AddEmployee = ({ addEmployeeData }) => {
         newEmployeeData
       );
 
-      console.log(response);
+      console.log(response.data.user);
 
       Toast.fire({
         icon: "success",
         title: "New employee added successfully!",
       });
 
-      addEmployeeData(newEmployeeData);
+      afterAddEmployeeHandler(response.data.user);
       setNewEmployeeData(employeeDataStructure);
     } catch (error) {
       console.log(error);
@@ -237,7 +239,6 @@ const AddEmployee = ({ addEmployeeData }) => {
                 id="dob"
                 name="dob"
                 required
-                placeholder="Date of Hire"
                 value={newEmployeeData.dob}
                 onChange={(e) =>
                   setNewEmployeeData({
@@ -256,7 +257,6 @@ const AddEmployee = ({ addEmployeeData }) => {
                 id="hireDate"
                 name="hireDate"
                 required
-                placeholder="Date of Hire"
                 value={newEmployeeData.hiredate}
                 onChange={(e) =>
                   setNewEmployeeData({

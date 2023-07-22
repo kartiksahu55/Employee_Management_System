@@ -53,10 +53,6 @@ const userSchema = new Schema(
 
     dob: {
       type: String,
-      get: (dob) => {
-        if (!dob) return "";
-        return new Date().toLocaleDateString("en-IN");
-      },
     },
 
     avatar: {
