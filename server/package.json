@@ -5,7 +5,7 @@
   "description": "Employee management system",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index",
+    "start": "node index.js",
     "build": "npm install && npm run build-server",
     "build-server": "echo 'Building server...' && npm run compile-server",
     "compile-server": "echo 'Compiling server...'"
