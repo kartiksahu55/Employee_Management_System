@@ -5,37 +5,38 @@ import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
+import {login_api} from "../../config"
 
 const Login = () => {
   const [isLoginSuccessful, setIsLoginSuccessful] = useState(false);
   const [goBackHome, setGoBackHome] = useState(false);
 
+  console.log(login_api);
+
   const loginUser = async (loginDetail) => {
     try {
       console.log(loginDetail);
-      console.log(process.env.REACT_APP_API_USER_LOGIN);
-      const { data } = await axios.post(
-        process.env.REACT_APP_API_USER_LOGIN,
-        loginDetail,
-        { withCredentials: true }
-      );
+
+      const { data, status } = await axios.post(login_api, loginDetail, {
+        withCredentials: true,
+      });
       console.log(data || "Oops! Something went wrong");
       setIsLoginSuccessful(true);
       return Swal.fire({
-        title:"Success",
-        text:data.message,
-        icon:"success",
-        confirmButtonText:"Ok"
-      })
+        title: "Success",
+        text: data.message,
+        icon: "success",
+        confirmButtonText: "Ok",
+      });
     } catch (err) {
       const error = err.response.data.message || err.message;
       console.log(error);
       return Swal.fire({
-        title:"Error",
-        text:error,
-        icon:"error",
-        confirmButtonText:"Ok!"
-      })
+        title: "Error",
+        text: error,
+        icon: "error",
+        confirmButtonText: "Ok!",
+      });
     }
   };
 

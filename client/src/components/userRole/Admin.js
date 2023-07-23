@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import styleCss from "./Admin.module.css";
 // import employeeDataBase from "../../dbData";
 import AddEmployee from "../AddEmployee";
@@ -7,6 +7,7 @@ import { faArrowsRotate } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import axios from "axios";
 import EditEmployee from "../EditEmployee";
+import {delete_api} from "../../config"
 
 const Admin = ({ isAdmin, employeeDataDB }) => {
   const [employeeData, setEmpoyeeData] = useState(employeeDataDB);
@@ -45,7 +46,7 @@ const Admin = ({ isAdmin, employeeDataDB }) => {
   const deleteEmployee = async (id) => {
     try {
       const response = await axios.delete(
-        `http://localhost:4000/api/user/delete/${id}`,
+        `${delete_api}/${id}`,
         { withCredentials: true }
       );
       console.log(response);
@@ -111,7 +112,8 @@ const Admin = ({ isAdmin, employeeDataDB }) => {
         {!addEmployeePage && !editEmployeePage && (
           <div className={styleCss.employee_table_container}>
             <div className={styleCss.show_total_employee}>
-              Total Employee: <input type="number" readOnly value={employeeData.length}/>
+              Total Employee:{" "}
+              <input type="number" readOnly value={employeeData.length} />
             </div>
             <table className={styleCss.employee_table}>
               {/* Table Head */}

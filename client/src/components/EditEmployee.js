@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styleCss from "./AddEmployee.module.css";
 import Swal from "sweetalert2";
 import axios from "axios";
+import {update_api} from "../config"
 
 const EditEmployee = ({ selectEditEmployee, afterEditHandler }) => {
   const [loader, setLoader] = useState(false);
@@ -18,7 +19,7 @@ const EditEmployee = ({ selectEditEmployee, afterEditHandler }) => {
       setLoader(true)
       // Upload and update Employee Date
       const response = await axios.patch(
-        `http://localhost:4000/api/user/update/${editEmployeeData._id}`,
+        `${update_api}/${editEmployeeData._id}`,
         payload,
         { withCredentials: true }
       );

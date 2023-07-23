@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styleCss from "./AddEmployee.module.css";
 import Swal from "sweetalert2";
 import axios from "axios";
+import { signup_api } from "../config";
 
 const employeeDataStructure = {
   firstname: "",
@@ -15,6 +16,7 @@ const employeeDataStructure = {
   password: "12345678",
 };
 
+console.log("log:", signup_api);
 const AddEmployee = ({ afterAddEmployeeHandler }) => {
   const [loader, setLoader] = useState(false);
   const [newEmployeeData, setNewEmployeeData] = useState(employeeDataStructure);
@@ -39,14 +41,11 @@ const AddEmployee = ({ afterAddEmployeeHandler }) => {
     // Add Image to Object File
     const payload = { ...newEmployeeData, avatarfile: selectedImage };
 
-    // Add Employee
+    // Add New Employee
     try {
-      setLoader(true)
+      setLoader(true);
       console.log(payload);
-      const response = await axios.post(
-        "http://localhost:4000/api/user/signup",
-        payload
-      );
+      const response = await axios.post(signup_api, payload);
 
       console.log(response.data.user);
 
@@ -57,10 +56,10 @@ const AddEmployee = ({ afterAddEmployeeHandler }) => {
 
       afterAddEmployeeHandler(response.data.user);
       setNewEmployeeData(employeeDataStructure);
-      setLoader(false)
+      setLoader(false);
     } catch (error) {
       console.log(error);
-      setLoader(false)
+      setLoader(false);
       if (!error.response) {
         Toast.fire({
           icon: "error",

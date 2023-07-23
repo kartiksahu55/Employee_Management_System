@@ -2,12 +2,9 @@ import React, { useState } from "react";
 import "./NavBar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faUserLarge,
   faGaugeHigh,
   faHouseChimney,
-  faArrowRightToBracket,
   faArrowRightFromBracket,
-  faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 
@@ -50,20 +47,6 @@ const NavBar = ({ logoutUser, userDataDB }) => {
             <FontAwesomeIcon icon={faHouseChimney} />
             <Link to="/">Home</Link>
           </li>
-          {/* <li
-            className={activeItem === "Signup" ? "active" : "inactive"}
-            onClick={() => handleItemClick("Signup")}
-          >
-            <FontAwesomeIcon icon={faUserPlus} />
-            <Link to="/signup">Signup</Link>
-          </li>
-          <li
-            className={activeItem === "Login" ? "active" : "inactive"}
-            onClick={() => handleItemClick("Login")}
-          >
-            <FontAwesomeIcon icon={faArrowRightToBracket} />
-            <Link to="/login">Login</Link>
-          </li> */}
           <li className="inactive" onClick={() => logoutUser()}>
             <FontAwesomeIcon icon={faArrowRightFromBracket} />
             <Link to="/">Logout</Link>

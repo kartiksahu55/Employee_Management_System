@@ -4,6 +4,7 @@ import axios from "axios";
 import { Navigate } from "react-router";
 import Admin from "../../components/userRole/Admin";
 import Employee from "../../components/userRole/Employee";
+import {fetchUser_api} from "../../config"
 
 const User = ({ setuserLoggedIn }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -18,7 +19,7 @@ const User = ({ setuserLoggedIn }) => {
   // -----Calling User-----
   const fetchUser = async () => {
     try {
-      const response = await axios.get("http://localhost:4000/api/user/fetch", {
+      const response = await axios.get(fetchUser_api, {
         withCredentials: true,
       });
       const success = response.data.success;

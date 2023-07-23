@@ -5,6 +5,7 @@ import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
+import { signup_api } from "../../config";
 
 const Signup = () => {
   const [isSignupSuccessful, setIsSignupSuccessful] = useState(false);
@@ -12,11 +13,11 @@ const Signup = () => {
 
   const signupUser = async (signupDetail) => {
     try {
-      const { data, status } = await axios.post(
-        "http://localhost:4000/api/user/signup",
-        signupDetail,
-        { withCredentials: true }
-      );
+      // const signup_api =
+
+      const { data, status } = await axios.post(signup_api, signupDetail, {
+        withCredentials: true,
+      });
 
       console.log(data.message, status);
       setIsSignupSuccessful(true);
