@@ -1,5 +1,5 @@
-import app from "./app.js";
-import dbConnect from "../config/databaseConfig.js";
+import app from "./src/app.js";
+import dbConnect from "./config/databaseConfig.js";
 
 const PORT = process.env.PORT || 5000;
 const HOSTNAME = process.env.HOSTNAME;

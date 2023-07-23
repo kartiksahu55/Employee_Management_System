@@ -3,11 +3,11 @@
   "type": "module",
   "version": "1.0.0",
   "description": "Employee management system",
-  "main": "./src/index.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./src/index.js",
-    "dev": "nodemon ./src/index.js",
+    "start": "node index.js",
+    "dev": "nodemon index.js",
     "build": "npm i"
   },
   "author": "kartik_chandra_sahu",
