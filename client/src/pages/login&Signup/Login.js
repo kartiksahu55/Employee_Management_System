@@ -13,8 +13,9 @@ const Login = () => {
   const loginUser = async (loginDetail) => {
     try {
       console.log(loginDetail);
-      const { data, status } = await axios.post(
-        "http://localhost:4000/api/user/login",
+      console.log(process.env.REACT_APP_API_USER_LOGIN);
+      const { data } = await axios.post(
+        process.env.REACT_APP_API_USER_LOGIN,
         loginDetail,
         { withCredentials: true }
       );
