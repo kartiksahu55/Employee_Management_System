@@ -5,10 +5,10 @@
   "description": "Employee management system",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
-    "dev": "nodemon index.js",
-    "build": "npm i"
+    "start": "nodemon index",
+    "build": "npm install && npm run build-server",
+    "build-server": "echo 'Building server...' && npm run compile-server",
+    "compile-server": "echo 'Compiling server...'"
   },
   "author": "kartik_chandra_sahu",
   "license": "ISC",
