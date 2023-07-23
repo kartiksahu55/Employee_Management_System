@@ -8,8 +8,6 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import EditEmployee from "../EditEmployee";
 
-const UserContext = createContext()
-
 const Admin = ({ isAdmin, employeeDataDB }) => {
   const [employeeData, setEmpoyeeData] = useState(employeeDataDB);
   const [addEmployeePage, setAddEmployeePage] = useState(false);
