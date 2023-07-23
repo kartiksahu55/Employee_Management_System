@@ -8,7 +8,7 @@ const cookieOption = {
   path: "/",
   maxAge: 12 * 60 * 60 * 100,
   httpOnly: true,
-  // secure: true,
+  secure: true,
 };
 
 // -------------------User__Registration/Signup-------------------
