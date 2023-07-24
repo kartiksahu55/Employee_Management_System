@@ -4,7 +4,7 @@ import Home from "./pages/home/Home";
 import Signup from "./pages/login&Signup/Signup";
 import Login from "./pages/login&Signup/Login";
 import NoPage from "./pages/nopage/NoPage";
-import User from "./pages/user/User";
+import Dashboard from "./pages/user/Dashboard";
 import { useState } from "react";
 
 function App() {
@@ -15,8 +15,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home userLoggedIn={userLoggedIn} />} />
         <Route
-          path="/user"
-          element={<User setuserLoggedIn={setuserLoggedIn} />}
+          path="/dashboard"
+          element={<Dashboard setuserLoggedIn={setuserLoggedIn} />}
         />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />

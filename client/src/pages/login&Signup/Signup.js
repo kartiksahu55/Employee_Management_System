@@ -6,14 +6,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import { signup_api } from "../../config";
+import PageLoader from "../../components/UI/PageLoader";
 
 const Signup = () => {
+  const [loader, setLoader] = useState(false);
   const [isSignupSuccessful, setIsSignupSuccessful] = useState(false);
   const [goBackHome, setGoBackHome] = useState(false);
 
   const signupUser = async (signupDetail) => {
     try {
-      // const signup_api =
+      setLoader(true);
 
       const { data, status } = await axios.post(signup_api, signupDetail, {
         withCredentials: true,
@@ -28,14 +30,20 @@ const Signup = () => {
         confirmButtonText: "Ok",
       });
     } catch (error) {
-      const { response } = error;
-      console.log(response.data.message);
-      return Swal.fire({
-        title: "Error",
-        text: response.data.message,
-        icon: "error",
-        confirmButtonText: "Ok!",
-      });
+      setLoader(false);
+      if (!error.response) {
+        return Swal.fire({
+          title: error.message,
+          icon: "error",
+          confirmButtonText: "Ok!",
+        });
+      } else {
+        return Swal.fire({
+          title: error.response.data.message,
+          icon: "error",
+          confirmButtonText: "Ok!",
+        });
+      }
     }
   };
 
@@ -58,7 +66,7 @@ const Signup = () => {
 
   // ------------Navigate On Action------------
   if (isSignupSuccessful) {
-    return <Navigate to="/user" />;
+    return <Navigate to="/dashboard" />;
   }
   if (goBackHome) {
     return <Navigate to="/" />;
@@ -89,7 +97,8 @@ const Signup = () => {
           </label>
         </div>
         <input type="password" name="password" placeholder="Choose Password" />
-        <button type="submit">Signup</button>
+        {!loader && <button type="submit">Signup</button>}
+        {loader && <PageLoader />}
         <div>
           Already Logged In:{" "}
           <Link className={styleCss.login_Redirect} to="/login">

@@ -5,9 +5,11 @@ import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
-import {login_api} from "../../config"
+import { login_api } from "../../config";
+import PageLoader from "../../components/UI/PageLoader";
 
 const Login = () => {
+  const [loader, setLoader] = useState(false);
   const [isLoginSuccessful, setIsLoginSuccessful] = useState(false);
   const [goBackHome, setGoBackHome] = useState(false);
 
@@ -16,8 +18,8 @@ const Login = () => {
   const loginUser = async (loginDetail) => {
     try {
       console.log(loginDetail);
-
-      const { data, status } = await axios.post(login_api, loginDetail, {
+      setLoader(true);
+      const { data } = await axios.post(login_api, loginDetail, {
         withCredentials: true,
       });
       console.log(data || "Oops! Something went wrong");
@@ -28,15 +30,22 @@ const Login = () => {
         icon: "success",
         confirmButtonText: "Ok",
       });
-    } catch (err) {
-      const error = err.response.data.message || err.message;
+    } catch (error) {
       console.log(error);
-      return Swal.fire({
-        title: "Error",
-        text: error,
-        icon: "error",
-        confirmButtonText: "Ok!",
-      });
+      setLoader(false);
+      if (!error.response) {
+        return Swal.fire({
+          title: error.message,
+          icon: "error",
+          confirmButtonText: "Ok!",
+        });
+      } else {
+        return Swal.fire({
+          title: error.response.data.message,
+          icon: "error",
+          confirmButtonText: "Ok!",
+        });
+      }
     }
   };
 
@@ -53,7 +62,7 @@ const Login = () => {
 
   // ------------Navigate On Action------------
   if (isLoginSuccessful) {
-    return <Navigate to="/user" />;
+    return <Navigate to="/dashboard" />;
   }
   if (goBackHome) {
     return <Navigate to="/" />;
@@ -69,7 +78,8 @@ const Login = () => {
         <h2>Login</h2>
         <input type="email" name="email" placeholder="Email" />
         <input type="password" name="password" placeholder="Choose Password" />
-        <button type="submit">Login</button>
+        {!loader && <button type="submit">Login</button>}
+        {loader && <PageLoader />}
         <div>
           Don't have an account:{" "}
           <Link className={styleCss.login_Redirect} to="/signup">

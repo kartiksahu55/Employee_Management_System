@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import styleCss from "./AddEmployee.module.css";
 import Swal from "sweetalert2";
 import axios from "axios";
-import {update_api} from "../config"
+import { update_api } from "../config";
+import PageLoader from "./UI/PageLoader";
 
 const EditEmployee = ({ selectEditEmployee, afterEditHandler }) => {
   const [loader, setLoader] = useState(false);
@@ -16,7 +17,7 @@ const EditEmployee = ({ selectEditEmployee, afterEditHandler }) => {
     try {
       // Add Image to Object File
       const payload = { ...editEmployeeData, avatarfile: selectedImage };
-      setLoader(true)
+      setLoader(true);
       // Upload and update Employee Date
       const response = await axios.patch(
         `${update_api}/${editEmployeeData._id}`,
@@ -30,10 +31,10 @@ const EditEmployee = ({ selectEditEmployee, afterEditHandler }) => {
       if (response.data.doc) {
         afterEditHandler(response.data.doc);
       }
-      setLoader(false)
+      setLoader(false);
     } catch (error) {
       console.log(error);
-      setLoader(false)
+      setLoader(false);
       if (!error.response) {
         Toast.fire({
           icon: "error",
@@ -259,8 +260,10 @@ const EditEmployee = ({ selectEditEmployee, afterEditHandler }) => {
             </div>
 
             {!loader && <button type="submit">Edit Employee</button>}
-            {loader && <span className={styleCss.loader}></span>}
           </form>
+          <div className={styleCss.page_loader}>
+            {loader && <PageLoader />}
+          </div>
         </div>
       </div>
     </div>

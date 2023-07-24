@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from "react";
-import NavBar from "../../components/header/NavBar";
+import styleCss from "./Dashboard.module.css";
+import NavBar from "../../components/UI/header/NavBar";
 import axios from "axios";
 import { Navigate } from "react-router";
 import Admin from "../../components/userRole/Admin";
 import Employee from "../../components/userRole/Employee";
-import {fetchUser_api} from "../../config"
+import { fetchUser_api } from "../../config";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleRight } from "@fortawesome/free-solid-svg-icons";
 
-const User = ({ setuserLoggedIn }) => {
+const Dashboard = ({ setuserLoggedIn }) => {
+  const [sigUpNavigate, setSignUpNavigate] = useState(false);
+  const [logInNavigate, setLogInNavigate] = useState(false);
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isEmployee, setIsEmployee] = useState(false);
@@ -70,8 +76,16 @@ const User = ({ setuserLoggedIn }) => {
     }
   }
 
+    // -----Navigate On Action-----
+    if (sigUpNavigate) {
+      return <Navigate to="/signup" />;
+    }
+    if (logInNavigate) {
+      return <Navigate to="/login" />;
+    }
+
   return (
-    <div>
+    <div className={styleCss.dashboard_container}>
       {isLoggedIn && (
         <NavBar
           className="nav_bar"
@@ -79,6 +93,33 @@ const User = ({ setuserLoggedIn }) => {
           userDataDB={userDataDB}
         />
       )}
+      {!isLoggedIn && (
+        <div className={styleCss.dashboard_not_logedin}>
+          <div className={styleCss.dashboard_Btn_Container}>
+            <button
+              className={styleCss.dashboard_button}
+              onClick={() => setSignUpNavigate(true)}
+            >
+              SignUp
+              <FontAwesomeIcon
+                className={styleCss.dashboard_Font_Awesome}
+                icon={faCircleRight}
+              />
+            </button>
+            <button
+              className={styleCss.dashboard_button}
+              onClick={() => setLogInNavigate(true)}
+            >
+              LogIn
+              <FontAwesomeIcon
+                className={styleCss.dashboard_Font_Awesome}
+                icon={faCircleRight}
+              />
+            </button>
+          </div>
+        </div>
+      )}
+
       <div className={isLoggedIn ? "route" : "remove_margin"}>
         {isAdmin ? (
           <Admin isAdmin={isAdmin} employeeDataDB={employeeDataDB} />
@@ -90,4 +131,4 @@ const User = ({ setuserLoggedIn }) => {
   );
 };
 
-export default User;
+export default Dashboard;

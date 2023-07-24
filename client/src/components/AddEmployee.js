@@ -3,6 +3,7 @@ import styleCss from "./AddEmployee.module.css";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { signup_api } from "../config";
+import PageLoader from "./UI/PageLoader";
 
 const employeeDataStructure = {
   firstname: "",
@@ -285,7 +286,7 @@ const AddEmployee = ({ afterAddEmployeeHandler }) => {
             </label>
           </div>
           {!loader && <button type="submit">Create Employee</button>}
-          {loader && <span className={styleCss.loader}></span>}
+          {loader && <PageLoader/>}
         </form>
         <p>Default Password: 12345678</p>
       </div>
