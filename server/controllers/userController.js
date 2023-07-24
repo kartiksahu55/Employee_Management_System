@@ -9,6 +9,7 @@ const cookieOption = {
   maxAge: 12 * 60 * 60 * 100,
   httpOnly: true,
   secure: true,
+  sameSite:"none"
 };
 
 // -------------------User__Registration/Signup-------------------

@@ -12,7 +12,7 @@ dotenv.config();
 // Middleware Implement
 app.use(express.json({limit:"20mb"}));
 app.use(
-  "*",
+  "https://empowerstaff.netlify.app/",
   cors({
     credentials: true,
     origin: true,
