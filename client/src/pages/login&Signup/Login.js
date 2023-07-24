@@ -13,16 +13,16 @@ const Login = () => {
   const [isLoginSuccessful, setIsLoginSuccessful] = useState(false);
   const [goBackHome, setGoBackHome] = useState(false);
 
-  console.log(login_api);
+  // console.log(login_api);
 
   const loginUser = async (loginDetail) => {
     try {
-      console.log(loginDetail);
+      // console.log(loginDetail);
       setLoader(true);
       const { data } = await axios.post(login_api, loginDetail, {
         withCredentials: true,
       });
-      console.log(data || "Oops! Something went wrong");
+      // console.log(data || "Oops! Something went wrong");
       setIsLoginSuccessful(true);
       return Swal.fire({
         title: "Success",
@@ -31,7 +31,7 @@ const Login = () => {
         confirmButtonText: "Ok",
       });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       setLoader(false);
       if (!error.response) {
         return Swal.fire({
@@ -76,8 +76,14 @@ const Login = () => {
         onSubmit={formSubmitHandler}
       >
         <h2>Login</h2>
-        <input type="email" name="email" placeholder="Email" />
-        <input type="password" name="password" placeholder="Choose Password" />
+        <input type="email" name="email" required placeholder="Email" />
+        <input
+          type="password"
+          name="password"
+          required
+          minLength="8"
+          placeholder="Choose Password"
+        />
         {!loader && <button type="submit">Login</button>}
         {loader && <PageLoader />}
         <div>

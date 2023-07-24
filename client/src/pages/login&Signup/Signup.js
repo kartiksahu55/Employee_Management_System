@@ -21,7 +21,7 @@ const Signup = () => {
         withCredentials: true,
       });
 
-      console.log(data.message, status);
+      // console.log(data.message, status);
       setIsSignupSuccessful(true);
       return Swal.fire({
         title: "Success",
@@ -76,9 +76,9 @@ const Signup = () => {
     <div className={styleCss.login_or_signup__Page}>
       <form className={styleCss.login_or_signup__Form} onSubmit={submitHandler}>
         <h2>Signup</h2>
-        <input type="text" name="fName" placeholder="First Name" />
-        <input type="text" name="lName" placeholder="Last Name" />
-        <input type="email" name="email" placeholder="Email" />
+        <input type="text" name="fName" required placeholder="First Name" />
+        <input type="text" name="lName" required placeholder="Last Name" />
+        <input type="email" name="email" required placeholder="Email" />
         <input type="number" name="pNumber" placeholder="Phone Number" />
         <div className={styleCss.signup_Form__dob_gen}>
           <label htmlFor="dob">
