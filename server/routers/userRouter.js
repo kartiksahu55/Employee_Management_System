@@ -12,6 +12,6 @@ userRouter
   .get("/fetch", isloggedIn, userController.userFetch)
   .get("/logout", isloggedIn, userController.userLogout)
   .delete("/delete/:id", isloggedIn, adminController.deleteUser)
-  .patch("/update/:id", isloggedIn, adminController.updateUser);
+  .patch("/update/:id", isloggedIn, adminController.updateUser)
 
 export default userRouter;

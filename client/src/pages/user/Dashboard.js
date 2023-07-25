@@ -42,16 +42,17 @@ const Dashboard = ({ setuserLoggedIn }) => {
       } else {
         setIsEmployee(success);
       }
-      console.log(success, message);
+      // console.log(success, message);
     } catch (error) {
-      const success = error.response.data.success;
-      const message = error.response.data.message;
-      const status = error.response.status;
+      const success = error.response?.data.success;
+      const message = error.response?.data.message;
+      const status = error.response?.status;
 
       setIsLoggedIn(success); //false
       setuserLoggedIn(success); //false
 
-      console.log(success, message);
+      console.log(success);
+      console.log(error);
     }
   };
   useEffect(() => {
@@ -120,13 +121,13 @@ const Dashboard = ({ setuserLoggedIn }) => {
         </div>
       )}
 
-      <div className={isLoggedIn ? "route" : "remove_margin"}>
+      {isLoggedIn && <div className={isLoggedIn ? "route" : "remove_margin"}>
         {isAdmin ? (
           <Admin isAdmin={isAdmin} employeeDataDB={employeeDataDB} />
         ) : (
           <Employee isEmployee={isEmployee} userDataDB={userDataDB} />
         )}
-      </div>
+      </div>}
     </div>
   );
 };

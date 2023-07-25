@@ -9,7 +9,7 @@ const cookieOption = {
   maxAge: 12 * 60 * 60 * 100,
   httpOnly: true,
   secure: true,
-  sameSite:"none"
+  sameSite: "none",
 };
 
 // -------------------User__Registration/Signup-------------------
@@ -51,6 +51,7 @@ const userSignup = async (req, res, next) => {
 
     // Upload image file to Cloudinary
 
+    console.log("avatarfile: ", avatarfile);
     let cloudinaryResponse = undefined;
     if (avatarfile) {
       cloudinaryResponse = await cloudinary.v2.uploader.upload(avatarfile, {
@@ -76,9 +77,9 @@ const userSignup = async (req, res, next) => {
       password,
       gender,
       avatar: {
-        public_id: (cloudinaryResponse && cloudinaryResponse.public_id) || "",
+        public_id: cloudinaryResponse?.public_id || "",
         secure_url:
-        cloudinaryResponse && cloudinaryResponse.secure_url ||
+          (cloudinaryResponse && cloudinaryResponse.secure_url) ||
           "https://res.cloudinary.com/demo/image/upload/d_avatar.png/non_existing_id.png",
       },
       role,
@@ -116,6 +117,7 @@ const userSignup = async (req, res, next) => {
 const userLogin = async (req, res, next) => {
   try {
     const { email, password } = req.body;
+    console.log(req.body);
 
     //  Check, if request contains all the required fields or not
     if (!email || !password) {

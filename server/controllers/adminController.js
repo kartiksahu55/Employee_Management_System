@@ -41,6 +41,7 @@ const deleteUser = async (req, res, next) => {
 const updateUser = async (req, res, next) => {
   try {
     const id = req.params.id;
+    const { avatar, avatarfile } = req.body;
 
     // Check and Verify, if Email exist (Duplicate Emil not allowed)
     // const reqEmail = req.body.email;
@@ -50,19 +51,6 @@ const updateUser = async (req, res, next) => {
     // if (verifyEmail) {
     //   return next(new AppError("Email already exist!", 400));
     // }
-
-    // Update avatar image in cloudinary
-    const { avatar, avatarfile } = req.body;
-    const user = await User.findOne({ _id: id });
-    if (avatar.public_id) {
-      cloudinary.v2.uploader.destroy(avatar.public_id, (err, result) => {
-        if (err) {
-          console.log("Delete Unsuccessful: ", err);
-        } else {
-          console.log("Delete Successful: ", result);
-        }
-      });
-    }
 
     const cloudinaryResponse = await cloudinary.v2.uploader.upload(avatarfile, {
       folder: "EMS_Avatar",
@@ -74,6 +62,24 @@ const updateUser = async (req, res, next) => {
       ],
     });
 
+    // Update avatar image in cloudinary
+    //Check if image exist
+
+    if (avatar.public_id) {
+      console.log("avatar.public_id_test: ", avatar.public_id);
+      // const publicIdCheck = await cloudinary.api.resource(avatar.public_id);
+
+      // if(publicIdCheck.ava)
+
+      cloudinary.v2.uploader.destroy(avatar.public_id, (err, result) => {
+        if (err) {
+          console.log("Delete Unsuccessful: ", err);
+        } else {
+          console.log("Delete Successful: ", result);
+        }
+      });
+    }
+
     const payload = {
       ...req.body,
       avatar: {
@@ -83,8 +89,7 @@ const updateUser = async (req, res, next) => {
           "https://res.cloudinary.com/demo/image/upload/d_avatar.png/non_existing_id.png",
       },
     };
-    payload.avatarfile=undefined
-    console.log(payload);
+    payload.avatarfile = undefined;
 
     // Update user from MongoDb
     const doc = await User.findOneAndUpdate({ _id: id }, payload, {
@@ -99,6 +104,7 @@ const updateUser = async (req, res, next) => {
       doc,
     });
   } catch (error) {
+    console.log(error);
     return next(new AppError(error.message, 400));
   }
 };
