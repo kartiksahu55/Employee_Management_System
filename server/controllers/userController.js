@@ -190,8 +190,11 @@ const userFetch = async (req, res, next) => {
 const userLogout = async (req, res, next) => {
   try {
     res.cookie("token", null, {
+      path: "/",
       maxAge: 0,
       httpOnly: true,
+      secure: true,
+      sameSite: "none",
     });
 
     res.status(200).json({
