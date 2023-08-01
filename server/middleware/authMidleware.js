@@ -4,6 +4,8 @@ import AppError from "../utils/errorUtils.js";
 const isloggedIn = async (req, res, next) => {
   const token = req.cookies.token || null;
 
+  console.log("This is Token:", token);
+
   if (!token) {
     return next(new AppError("Unuthenticated, Please Login again", 400));
   }
