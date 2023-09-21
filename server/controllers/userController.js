@@ -7,7 +7,7 @@ import cloudinary from "../config/cloudinaryConfig.js";
 const cookieOption = {
   path: "/",
   maxAge: 12 * 60 * 60 * 100,
-  httpOnly: true,
+  // httpOnly: true,
   secure: true,
   sameSite: "none",
 };
