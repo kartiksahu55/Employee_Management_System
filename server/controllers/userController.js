@@ -192,7 +192,7 @@ const userLogout = async (req, res, next) => {
     res.cookie("token", null, {
       path: "/",
       maxAge: 0,
-      httpOnly: true,
+      
       secure: true,
       sameSite: "none",
     });
